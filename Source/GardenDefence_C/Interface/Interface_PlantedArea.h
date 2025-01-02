@@ -10,12 +10,11 @@ class UInterface_PlantedArea : public UInterface
 	GENERATED_BODY()
 };
 
-/**
- * 
- */
 class GARDENDEFENCE_C_API IInterface_PlantedArea
 {
 	GENERATED_BODY()
 
 public:
+	virtual void UpdateArrowVisibility();
+	virtual void RemovePlant();
 };

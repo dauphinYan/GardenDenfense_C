@@ -7,6 +7,7 @@
 USTRUCT(BlueprintType)
 struct FPlacedPlantInfo :public FTableRowBase
 {
+
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Plant Info")

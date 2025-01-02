@@ -21,3 +21,13 @@ void AActor_PlantedArea::Tick(float DeltaTime)
 
 }
 
+void AActor_PlantedArea::UpdateArrowVisibility()
+{
+
+}
+
+void AActor_PlantedArea::RemovePlant()
+{
+
+}
+
