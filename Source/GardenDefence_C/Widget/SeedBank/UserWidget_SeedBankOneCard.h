@@ -10,15 +10,48 @@ class GARDENDEFENCE_C_API UUserWidget_SeedBankOneCard : public UUserWidget
 {
 	GENERATED_BODY()
 
-private:
+public:
+	virtual void NativeConstruct() override;
+	
+	void SetCardInfo(FPlacedPlantInfo InPlacedPlantInfo, int32 InIndex);
+
+	UFUNCTION(BlueprintCallable)
+	void OnSelected();
+
+	UFUNCTION(BlueprintCallable)
+	void BeginCool();
+
+	UFUNCTION(BlueprintCallable)
+	void OnCanceled();
 
 public:
-	void SetCardInfo(FPlacedPlantInfo InPlacedPlantInfo);
-
-private:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* SunText;
 
 	UPROPERTY(meta = (BindWidget))
 	class UImage* PlantImage;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton* ButtonChoose;
+
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	UWidgetAnimation* CoolingAnimation;
+
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	UWidgetAnimation* OnSelectedAnimation;
+
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	UWidgetAnimation* OnCanceledAnimation;
+
+	class USoundWave* SoundWave;
+
+	UFUNCTION()
+	void OnButtonChooseClicked();
+
+private:
+	class AMainPlayerController* PlayerController;
+	FPlacedPlantInfo PlacedPlantInfo;
+	int32 Index = -1;
+	bool bIsCool = false;
+
 };

@@ -12,14 +12,21 @@ class GARDENDEFENCE_C_API UUserWidget_SeedBank : public UUserWidget
 
 public:
 	virtual void NativeConstruct() override;
-	void UpdatePlantBox();
 
+public:
 	UPROPERTY(meta = (BindWidget))
 	class UHorizontalBox* PlantBox;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class UUserWidget_SeedBankOneCard> SeedBankOneCardClass;
+	void UpdatePlantBox();
+	void SelectPlantCard(int32 Index);
+
 
 private:
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class UUserWidget_SeedBankOneCard> SeedBankOneCardClass;
+
+	TArray<UUserWidget_SeedBankOneCard*> SeedBankCards;
+
+	int32 CurIndex = -1;
 
 };

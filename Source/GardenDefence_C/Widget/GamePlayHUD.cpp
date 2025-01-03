@@ -3,6 +3,7 @@
 
 #include "GamePlayHUD.h"
 #include "GardenDefence_C/Widget/UserWidget_MainUI.h"
+#include "GardenDefence_C/Widget/SeedBank/UserWidget_SeedBank.h"
 
 void AGamePlayHUD::BeginPlay()
 {
@@ -14,4 +15,9 @@ void AGamePlayHUD::BeginPlay()
 		MainUI = CreateWidget<UUserWidget_MainUI>(PlayerController, MainUIClass);
 		MainUI->AddToViewport();
 	}
+}
+
+void AGamePlayHUD::SelectPlantInSeedBank(int32 Index)
+{
+	MainUI->SeedBank->SelectPlantCard(Index);
 }

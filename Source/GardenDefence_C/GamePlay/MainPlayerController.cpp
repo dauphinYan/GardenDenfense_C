@@ -8,3 +8,8 @@ void AMainPlayerController::BeginPlay()
 
 	CharacterHUD = Cast<AGamePlayHUD>(GetHUD());
 }
+
+void AMainPlayerController::SelectPlantInSeedBank(int32 Index)
+{
+	CharacterHUD->SelectPlantInSeedBank(Index);
+}

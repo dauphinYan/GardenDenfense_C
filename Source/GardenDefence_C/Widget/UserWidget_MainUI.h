@@ -15,8 +15,10 @@ class GARDENDEFENCE_C_API UUserWidget_MainUI : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-
-	UPROPERTY(meta=(BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	class UUserWidget_SeedBank* SeedBank;
+
+private:
+
 
 };

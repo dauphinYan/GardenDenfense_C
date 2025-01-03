@@ -7,7 +7,7 @@
 #include "GamePlayHUD.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class GARDENDEFENCE_C_API AGamePlayHUD : public AHUD
@@ -20,9 +20,9 @@ public:
 	UPROPERTY()
 	class UUserWidget_MainUI* MainUI;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class UUserWidget> MainUIClass;
+	void SelectPlantInSeedBank(int32 Index);
 
 private:
-
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class UUserWidget> MainUIClass;
 };

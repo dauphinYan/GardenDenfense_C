@@ -29,7 +29,7 @@ struct FPlacedPlantInfo :public FTableRowBase
 	float Price;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Plant Info")
-	int32 CoolingTime;
+	float CoolingTime;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Plant Info")
 	UTexture2D* PlantImage;
