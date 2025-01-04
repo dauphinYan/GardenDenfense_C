@@ -1,12 +1,15 @@
 #include "UserWidget_SeedBank.h"
 #include "UserWidget_SeedBankOneCard.h"
 #include "Components/HorizontalBox.h"
+#include "GardenDefence_C/GamePlay/MainPlayerController.h"
+#include "GardenDefence_C/Enum/OperationState.h"
 
 
 void UUserWidget_SeedBank::NativeConstruct()
 {
 	Super::NativeConstruct();
 
+	PlayerController = Cast<AMainPlayerController>(GetWorld()->GetFirstPlayerController());
 	UpdatePlantBox();
 }
 
@@ -50,6 +53,11 @@ void UUserWidget_SeedBank::SelectPlantCard(int32 Index)
 		{
 			SeedBankCards[i]->OnCanceled();
 		}
+		PlayerController = PlayerController == nullptr ? Cast<AMainPlayerController>(GetWorld()->GetFirstPlayerController()) : PlayerController;
+		if (PlayerController)
+		{
+			PlayerController->OnCanceledSelectPlant();
+		}
 	}
 	else//第一次选择
 	{
@@ -59,5 +67,10 @@ void UUserWidget_SeedBank::SelectPlantCard(int32 Index)
 			SeedBankCards[i]->OnCanceled();
 		}
 		SeedBankCards[Index]->OnSelected();
+		PlayerController = PlayerController == nullptr ? Cast<AMainPlayerController>(GetWorld()->GetFirstPlayerController()) : PlayerController;
+		if (PlayerController)
+		{
+			PlayerController->OnSelectedPlant();
+		}
 	}
 }

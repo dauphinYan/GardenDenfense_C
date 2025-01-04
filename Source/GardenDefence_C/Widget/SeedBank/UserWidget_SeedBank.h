@@ -29,4 +29,6 @@ private:
 
 	int32 CurIndex = -1;
 
+	class AMainPlayerController* PlayerController;
+
 };

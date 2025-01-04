@@ -30,18 +30,16 @@ public:
 
 
 private:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "EnhancedInput", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UInputMappingContext> InputMappingContext;
 
-	UPROPERTY(EditAnywhere, Category = "EnhancedInput")
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
 	class UInputAction* IA_Move;
 
-	UPROPERTY(EditAnywhere, Category = "EnhancedInput")
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
 	class UInputAction* IA_Attack;
 
-	UPROPERTY(EditAnywhere,Category = "Camera")
+	UPROPERTY(EditDefaultsOnly, Category = "Camera")
 	class USpringArmComponent* SpringArm;
 
-	UPROPERTY(EditAnywhere,Category="Camera")
+	UPROPERTY(EditDefaultsOnly, Category = "Camera")
 	class UCameraComponent* Camera;
 };
