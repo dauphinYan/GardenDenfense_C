@@ -19,16 +19,25 @@ public:
 
 	void UpdatePlantBox();
 	void SelectPlantCard(int32 Index);
+	void OnCanceledSelect();
 
 
 private:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UUserWidget_SeedBankOneCard> SeedBankOneCardClass;
 
+	UPROPERTY()
 	TArray<UUserWidget_SeedBankOneCard*> SeedBankCards;
 
 	int32 CurIndex = -1;
 
+	UPROPERTY()
 	class AMainPlayerController* PlayerController;
+
+	UPROPERTY()
+	class USoundWave* SelectSoundWave;
+
+	UPROPERTY()
+	class USoundWave* GrowSoundWave;
 
 };

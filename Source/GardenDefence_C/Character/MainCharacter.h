@@ -5,8 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"  
-#include "EnhancedInputComponent.h"
-#include "EnhancedInputSubsystems.h"
+#include "GardenDefence_C/Enum/OperationState.h"
 #include "MainCharacter.generated.h"
 
 UCLASS()
@@ -42,4 +41,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")
 	class UCameraComponent* Camera;
+
+	UPROPERTY()
+	class AMainPlayerController* PlayerController;
+
+	EOperationState OperationState;
 };

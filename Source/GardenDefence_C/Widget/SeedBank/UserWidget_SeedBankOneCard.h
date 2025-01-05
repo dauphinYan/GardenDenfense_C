@@ -12,7 +12,7 @@ class GARDENDEFENCE_C_API UUserWidget_SeedBankOneCard : public UUserWidget
 
 public:
 	virtual void NativeConstruct() override;
-	
+
 	void SetCardInfo(FPlacedPlantInfo InPlacedPlantInfo, int32 InIndex);
 
 	UFUNCTION(BlueprintCallable)
@@ -43,7 +43,7 @@ public:
 	UPROPERTY(Transient, meta = (BindWidgetAnim))
 	UWidgetAnimation* OnCanceledAnimation;
 
-	class USoundWave* SoundWave;
+
 
 	UFUNCTION()
 	void OnButtonChooseClicked();
@@ -54,4 +54,7 @@ private:
 	int32 Index = -1;
 	bool bIsCool = false;
 
+
+public:
+	FORCEINLINE EPlacedPlantName GetPlantName() { return PlacedPlantInfo.PlacedPlantName; }
 };

@@ -21,3 +21,8 @@ void AGamePlayHUD::SelectPlantInSeedBank(int32 Index)
 {
 	MainUI->SeedBank->SelectPlantCard(Index);
 }
+
+void AGamePlayHUD::CancelSelectPlantInSeedBank()
+{
+	MainUI->SeedBank->OnCanceledSelect();
+}

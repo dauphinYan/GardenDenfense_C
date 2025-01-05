@@ -21,6 +21,7 @@ public:
 	class UUserWidget_MainUI* MainUI;
 
 	void SelectPlantInSeedBank(int32 Index);
+	void CancelSelectPlantInSeedBank();
 
 private:
 	UPROPERTY(EditDefaultsOnly)

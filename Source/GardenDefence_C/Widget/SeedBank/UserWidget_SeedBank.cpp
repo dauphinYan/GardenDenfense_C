@@ -3,6 +3,7 @@
 #include "Components/HorizontalBox.h"
 #include "GardenDefence_C/GamePlay/MainPlayerController.h"
 #include "GardenDefence_C/Enum/OperationState.h"
+#include "Kismet/GameplayStatics.h"
 
 
 void UUserWidget_SeedBank::NativeConstruct()
@@ -11,6 +12,8 @@ void UUserWidget_SeedBank::NativeConstruct()
 
 	PlayerController = Cast<AMainPlayerController>(GetWorld()->GetFirstPlayerController());
 	UpdatePlantBox();
+
+	SelectSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Plant/SelectPlant.SelectPlant'"));
 }
 
 void UUserWidget_SeedBank::UpdatePlantBox()
@@ -47,17 +50,7 @@ void UUserWidget_SeedBank::SelectPlantCard(int32 Index)
 {
 	if (CurIndex == Index)//第二次选择
 	{
-		SeedBankCards[Index]->OnSelected();
-		CurIndex = -1;
-		for (int32 i = 0; i < SeedBankCards.Num(); i++)
-		{
-			SeedBankCards[i]->OnCanceled();
-		}
-		PlayerController = PlayerController == nullptr ? Cast<AMainPlayerController>(GetWorld()->GetFirstPlayerController()) : PlayerController;
-		if (PlayerController)
-		{
-			PlayerController->OnCanceledSelectPlant();
-		}
+		//OnCanceledSelect();
 	}
 	else//第一次选择
 	{
@@ -66,11 +59,24 @@ void UUserWidget_SeedBank::SelectPlantCard(int32 Index)
 		{
 			SeedBankCards[i]->OnCanceled();
 		}
+		if (SelectSoundWave)
+		{
+			UGameplayStatics::PlaySound2D(this, SelectSoundWave);
+		}
 		SeedBankCards[Index]->OnSelected();
 		PlayerController = PlayerController == nullptr ? Cast<AMainPlayerController>(GetWorld()->GetFirstPlayerController()) : PlayerController;
 		if (PlayerController)
 		{
-			PlayerController->OnSelectedPlant();
+			PlayerController->OnSelectedPlant(SeedBankCards[Index]->GetPlantName());
 		}
+	}
+}
+
+void UUserWidget_SeedBank::OnCanceledSelect()
+{
+	CurIndex = -1;
+	for (int32 i = 0; i < SeedBankCards.Num(); i++)
+	{
+		SeedBankCards[i]->OnCanceled();
 	}
 }

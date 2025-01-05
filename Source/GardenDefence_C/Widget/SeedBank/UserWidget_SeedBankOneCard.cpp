@@ -5,7 +5,6 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "GardenDefence_C/GamePlay/MainPlayerController.h"
 #include "Sound/SoundWave.h"
-#include "Kismet/GameplayStatics.h"
 
 void UUserWidget_SeedBankOneCard::NativeConstruct()
 {
@@ -17,7 +16,7 @@ void UUserWidget_SeedBankOneCard::NativeConstruct()
 	}
 
 	PlayerController = Cast<AMainPlayerController>(GetWorld()->GetFirstPlayerController());
-	SoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Plant/SelectPlant.SelectPlant'"));
+
 }
 
 void UUserWidget_SeedBankOneCard::OnButtonChooseClicked()
@@ -37,10 +36,6 @@ void UUserWidget_SeedBankOneCard::SetCardInfo(FPlacedPlantInfo InPlacedPlantInfo
 void UUserWidget_SeedBankOneCard::OnSelected()
 {
 	PlayAnimation(OnSelectedAnimation);
-	if (SoundWave)
-	{
-		UGameplayStatics::PlaySound2D(this, SoundWave);
-	}
 }
 
 void UUserWidget_SeedBankOneCard::BeginCool()

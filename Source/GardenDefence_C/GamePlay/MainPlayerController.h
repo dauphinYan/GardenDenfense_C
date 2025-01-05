@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "GardenDefence_C/Enum/OperationState.h"
+#include "GardenDefence_C/Enum/PlacedPlantName.h"
 #include "EnhancedInputSubsystems.h"
 #include "MainPlayerController.generated.h"
 
@@ -14,6 +15,11 @@ class GARDENDEFENCE_C_API AMainPlayerController : public APlayerController
 
 public:
 	virtual void BeginPlay() override;
+	virtual void SetupInputComponent() override;
+
+	void OnCanceledButtonPressed();
+
+	UPROPERTY()
 	class AGamePlayHUD* CharacterHUD;
 
 	UFUNCTION(BlueprintCallable)
@@ -23,15 +29,22 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Plant")
 	TSubclassOf<class AActor_PrePlacedPlant> PrePlantClass;
 
-	void OnSelectedPlant();
+	void OnSelectedPlant(EPlacedPlantName InPlacedPlantName);
 	void OnCanceledSelectPlant();
+	void GrowPlacedPlant();
+
 
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "EnhancedInput", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputMappingContext> InputMappingContext;
 
+	UPROPERTY()
 	FTimerHandle PrePlantHandle;
+	UPROPERTY()
 	class AActor_PrePlacedPlant* PrePlant;
+
+	UPROPERTY()
+	class USoundWave* GrowSoundWave;
 
 protected:
 	void SetPrePlantLocation();

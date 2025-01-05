@@ -2,9 +2,13 @@
 
 
 #include "MainCharacter.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
+#include "GardenDefence_C/GamePlay/MainPlayerController.h"
+
 
 AMainCharacter::AMainCharacter()
 {
@@ -25,10 +29,24 @@ AMainCharacter::AMainCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
+void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
+	if (EnhancedInputComponent)
+	{
+		EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &AMainCharacter::Move);
+		EnhancedInputComponent->BindAction(IA_Attack, ETriggerEvent::Started, this, &AMainCharacter::Attack);
+		EnhancedInputComponent->BindAction(, ETriggerEvent::Started, this, & AMainCharacter::Attack);
+	}
+}
+
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	PlayerController = Cast<AMainPlayerController>(GetController());
 }
 
 void AMainCharacter::Move(const FInputActionValue& Value)
@@ -50,7 +68,17 @@ void AMainCharacter::Move(const FInputActionValue& Value)
 
 void AMainCharacter::Attack(const FInputActionValue& InputValue)
 {
-
+	PlayerController = PlayerController == nullptr ? Cast<AMainPlayerController>(GetController()) : PlayerController;
+	OperationState = PlayerController->OperationState;
+	switch (OperationState)
+	{
+	case EOperationState::EOS_Unoccupied:
+		
+		break;
+	case EOperationState::EOS_SelectingPlant:
+		PlayerController->GrowPlacedPlant();
+		break;
+	}
 }
 
 
@@ -60,16 +88,5 @@ void AMainCharacter::Tick(float DeltaTime)
 
 }
 
-void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
-	if (EnhancedInputComponent)
-	{
-		EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &AMainCharacter::Move);
-	}
-
-
-}
 
