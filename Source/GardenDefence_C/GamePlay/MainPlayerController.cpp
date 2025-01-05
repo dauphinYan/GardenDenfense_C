@@ -32,15 +32,15 @@ void AMainPlayerController::SetupInputComponent()
 	Super::SetupInputComponent();
 
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
-	//if (EnhancedInputComponent)
-	//{
-	//	EnhancedInputComponent->BindAction(IA_Cancel, ETriggerEvent::Started, this, &AMainPlayerController::OnCanceledButtonPressed);
-	//}
+	if (EnhancedInputComponent)
+	{
+		EnhancedInputComponent->BindAction(IA_Cancel, ETriggerEvent::Started, this, &AMainPlayerController::OnCanceledButtonPressed);
+	}
 }
 
 void AMainPlayerController::OnCanceledButtonPressed()
 {
-
+	OnCanceledSelectPlant();
 }
 
 void AMainPlayerController::SelectPlantInSeedBank(int32 Index)
@@ -60,7 +60,7 @@ void AMainPlayerController::OnSelectedPlant(EPlacedPlantName InPlacedPlantName)
 void AMainPlayerController::OnCanceledSelectPlant()
 {
 	OperationState = EOperationState::EOS_Unoccupied;
-	GetWorld()->GetTimerManager().PauseTimer(PrePlantHandle);
+	//GetWorld()->GetTimerManager().PauseTimer(PrePlantHandle);
 	if (PrePlant == nullptr || CharacterHUD == nullptr) return;
 	PrePlant->SetPlacedPlant(EPlacedPlantName::PPN_DefaultMax);
 	CharacterHUD->CancelSelectPlantInSeedBank();

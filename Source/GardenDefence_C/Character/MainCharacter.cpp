@@ -38,7 +38,6 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	{
 		EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &AMainCharacter::Move);
 		EnhancedInputComponent->BindAction(IA_Attack, ETriggerEvent::Started, this, &AMainCharacter::Attack);
-		EnhancedInputComponent->BindAction(, ETriggerEvent::Started, this, & AMainCharacter::Attack);
 	}
 }
 

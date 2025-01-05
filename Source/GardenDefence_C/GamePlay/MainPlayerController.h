@@ -38,6 +38,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "EnhancedInput", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputMappingContext> InputMappingContext;
 
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
+	class UInputAction* IA_Cancel;
+
 	UPROPERTY()
 	FTimerHandle PrePlantHandle;
 	UPROPERTY()
