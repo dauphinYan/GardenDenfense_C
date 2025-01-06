@@ -13,15 +13,14 @@ class GARDENDEFENCE_C_API AActor_PlacedPlant : public AActor
 	
 public:	
 	AActor_PlacedPlant();
+	virtual void Tick(float DeltaTime) override;
 
 protected:
 	virtual void BeginPlay() override;
 
-public:	
-	virtual void Tick(float DeltaTime) override;
-
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* PlantStaticMesh;
+
 
 };

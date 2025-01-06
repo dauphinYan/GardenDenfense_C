@@ -15,6 +15,6 @@ class GARDENDEFENCE_C_API IInterface_PlantedArea
 	GENERATED_BODY()
 
 public:
-	virtual void UpdateArrowVisibility();
+	virtual void SetArrowVisibility(bool bCanSee);
 	virtual void RemovePlant();
 };

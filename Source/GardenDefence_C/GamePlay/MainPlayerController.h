@@ -45,6 +45,10 @@ private:
 	FTimerHandle PrePlantHandle;
 	UPROPERTY()
 	class AActor_PrePlacedPlant* PrePlant;
+	UPROPERTY()
+	FTimerHandle DetectPlantAreaHandle;
+	UPROPERTY()
+	AActor* PlacedPlantArea;
 
 	UPROPERTY()
 	class USoundWave* GrowSoundWave;

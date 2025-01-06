@@ -2,23 +2,35 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "../Interface/Interface_PlantedArea.h"
 #include "Actor_PlantedArea.generated.h"
 
 UCLASS()
-class GARDENDEFENCE_C_API AActor_PlantedArea : public AActor, public IInterface_PlantedArea
+class GARDENDEFENCE_C_API AActor_PlantedArea : public AActor
 {
 	GENERATED_BODY()
 
 public:
 	AActor_PlantedArea();
-
+	virtual void Tick(float DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 
-public:
-	virtual void Tick(float DeltaTime) override;
-	virtual void UpdateArrowVisibility() override;
-	virtual void RemovePlant() override;
+	UFUNCTION()
+	void OnCursorEnter(UPrimitiveComponent* TouchedComponent);
 
+	UFUNCTION()
+	void OnCursorLeave(UPrimitiveComponent* TouchedComponent);
+
+public:
+	void SetArrowVisibility(bool bCanSee);
+
+private:
+	UPROPERTY(EditDefaultsOnly)
+	class UWidgetComponent* ArrowWidget;
+
+	UPROPERTY(EditDefaultsOnly)
+	class UBoxComponent* BoxCollision;
+
+	UPROPERTY()
+	class AMainPlayerController* PlayerController;
 };

@@ -1,9 +1,12 @@
+#define ECC_PlantArea ECollisionChannel::ECC_GameTraceChannel1
+
 #include "MainPlayerController.h"
 #include "GardenDefence_C/Widget/UserWidget_MainUI.h"
 #include "GardenDefence_C/Widget/GamePlayHUD.h"
 #include "TimerManager.h"
 #include "GardenDefence_C/Plant/Actor_PrePlacedPlant.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
@@ -22,9 +25,12 @@ void AMainPlayerController::BeginPlay()
 		PrePlant = GetWorld()->SpawnActor<AActor_PrePlacedPlant>(PrePlantClass, Location, Transform);
 	}
 	CharacterHUD = Cast<AGamePlayHUD>(GetHUD());
+	GrowSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Plant/growplant.growplant'"));
+
+	// Uploading grow placedplant logic.
 	GetWorld()->GetTimerManager().SetTimer(PrePlantHandle, this, &AMainPlayerController::SetPrePlantLocation, 0.01f, true);
 	GetWorld()->GetTimerManager().PauseTimer(PrePlantHandle);
-	GrowSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Plant/growplant.growplant'"));
+
 }
 
 void AMainPlayerController::SetupInputComponent()
@@ -85,11 +91,11 @@ void AMainPlayerController::SetPrePlantLocation()
 	FHitResult HitResult;
 	if (GetWorld()->GetFirstPlayerController()->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, HitResult))
 	{
+		FVector Location = HitResult.Location;
 		if (PrePlant)
 		{
-			PrePlant->SetActorLocation(HitResult.Location);
+			PrePlant->SetActorLocation(Location);
 		}
 	}
-
 }
 
