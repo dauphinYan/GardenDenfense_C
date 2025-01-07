@@ -32,6 +32,7 @@ public:
 	void OnSelectedPlant(EPlacedPlantName InPlacedPlantName);
 	void OnCanceledSelectPlant();
 	void GrowPlacedPlant();
+	FVector GetCursorLocation();
 
 
 private:
@@ -49,6 +50,8 @@ private:
 	FTimerHandle DetectPlantAreaHandle;
 	UPROPERTY()
 	AActor* PlacedPlantArea;
+
+	EPlacedPlantName PlacedPlantName;
 
 	UPROPERTY()
 	class USoundWave* GrowSoundWave;

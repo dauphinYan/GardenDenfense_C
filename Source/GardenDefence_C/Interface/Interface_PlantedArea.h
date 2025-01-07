@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+#include "GardenDefence_C/Enum/PlacedPlantName.h"
 #include "Interface_PlantedArea.generated.h"
 
 UINTERFACE(MinimalAPI)
@@ -15,6 +16,6 @@ class GARDENDEFENCE_C_API IInterface_PlantedArea
 	GENERATED_BODY()
 
 public:
-	virtual void SetArrowVisibility(bool bCanSee);
+	virtual	void GrowPlant(EPlacedPlantName InPlacedPlantName);
 	virtual void RemovePlant();
 };

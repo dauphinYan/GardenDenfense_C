@@ -5,6 +5,8 @@
 #include "Components/BoxComponent.h"
 #include "GardenDefence_C/GamePlay/MainPlayerController.h"
 #include "GardenDefence_C/Enum/OperationState.h"
+#include "GardenDefence_C/Plant/Actor_PlacedPlant.h"
+#include "GardenDefence_C/Plant/PlacedPlant/Actor_PlacedPlant_SunFlower.h"
 
 AActor_PlantedArea::AActor_PlantedArea()
 {
@@ -44,6 +46,7 @@ void AActor_PlantedArea::OnCursorEnter(UPrimitiveComponent* TouchedComponent)
 	if (PlayerController == nullptr) return;
 	if (PlayerController->OperationState == EOperationState::EOS_SelectingPlant)
 	{
+
 		SetArrowVisibility(true);
 	}
 
@@ -70,5 +73,42 @@ void AActor_PlantedArea::SetArrowVisibility(bool bCanSee)
 {
 	if (ArrowWidget == nullptr) return;
 	ArrowWidget->SetVisibility(bCanSee);
+}
+
+void AActor_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
+{
+	switch (InPlacedPlantName)
+	{
+	case EPlacedPlantName::PPN_SunFlower:
+		const FString PlantPath = TEXT("Blueprint'/Game/Blueprint/Plant/PlacedPlant/BP_PlacedPlant_SunFlower.BP_PlacedPlant_SunFlower_C'");
+		UClass* PlantClass = StaticLoadClass(AActor_PlacedPlant_SunFlower::StaticClass(), nullptr, *PlantPath);
+
+		FVector SpawnLocation = PlayerController->GetCursorLocation();
+		FRotator SpawnRotation = FRotator::ZeroRotator;
+		Plant = GetWorld()->SpawnActor<AActor_PlacedPlant_SunFlower>(PlantClass, SpawnLocation, SpawnRotation);
+		if (Plant)
+		{
+			bIsPlanted = true;
+		}
+		break;
+		case EPlacedPlantName::PPN_WallNut:
+			break;
+		case EPlacedPlantName::PPN_Potatomine:
+			break;
+		case EPlacedPlantName::PPN_CherryBomb:
+			break;
+		case EPlacedPlantName::PPN_SpikeWeed:
+			break;
+		case EPlacedPlantName::PPN_TorchStump:
+			break;
+		case EPlacedPlantName::PPN_DefaultMax:
+			break;
+		default:
+			break;
+	}
+}
+
+void AActor_PlantedArea::RemovePlant()
+{
 }
 
