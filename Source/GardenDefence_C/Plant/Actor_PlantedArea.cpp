@@ -91,20 +91,20 @@ void AActor_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
 			bIsPlanted = true;
 		}
 		break;
-		case EPlacedPlantName::PPN_WallNut:
-			break;
-		case EPlacedPlantName::PPN_Potatomine:
-			break;
-		case EPlacedPlantName::PPN_CherryBomb:
-			break;
-		case EPlacedPlantName::PPN_SpikeWeed:
-			break;
-		case EPlacedPlantName::PPN_TorchStump:
-			break;
-		case EPlacedPlantName::PPN_DefaultMax:
-			break;
-		default:
-			break;
+		//case EPlacedPlantName::PPN_WallNut:
+		//	break;
+		//case EPlacedPlantName::PPN_Potatomine:
+		//	break;
+		//case EPlacedPlantName::PPN_CherryBomb:
+		//	break;
+		//case EPlacedPlantName::PPN_SpikeWeed:
+		//	break;
+		//case EPlacedPlantName::PPN_TorchStump:
+		//	break;
+		//case EPlacedPlantName::PPN_DefaultMax:
+		//	break;
+		//default:
+		//	break;
 	}
 }
 
