@@ -5,6 +5,7 @@
 #include "GardenDefence_C/GamePlay/MainPlayerController.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "Kismet/GameplayStatics.h"
 
 void UUserWidget_Shovel::NativeConstruct()
 {
@@ -14,6 +15,8 @@ void UUserWidget_Shovel::NativeConstruct()
 	this->SetVisibility(ESlateVisibility::Hidden);
 	GetWorld()->GetTimerManager().SetTimer(ShovelHandle, this, &UUserWidget_Shovel::SetShovelLocation, 0.01f, true);
 	GetWorld()->GetTimerManager().PauseTimer(ShovelHandle);
+
+	ShovelSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Tool/shovel.shovel'"));
 }
 
 void UUserWidget_Shovel::OnSelectedShovel()
@@ -22,7 +25,10 @@ void UUserWidget_Shovel::OnSelectedShovel()
 	if (PlayerController->OperationState == EOperationState::EOS_Shovel)
 	{
 		GetWorld()->GetTimerManager().UnPauseTimer(ShovelHandle);
-
+		if (ShovelSoundWave)
+		{
+			UGameplayStatics::PlaySound2D(GetWorld(), ShovelSoundWave);
+		}
 	}
 }
 

@@ -28,4 +28,7 @@ private:
 
 	UPROPERTY()
 	class AMainPlayerController* PlayerController;
+
+	UPROPERTY()
+	class USoundWave* ShovelSoundWave;
 };
