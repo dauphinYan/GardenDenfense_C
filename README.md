@@ -1,4 +1,8 @@
-# GardenDefence_C
+# 植物大战僵尸之花园保卫战
+
+<img src="MDimage/tittle_cn.png" alt="Tittle" style="zoom:80%;" />
+
+<img src="MDimage/tittle_en.png" alt="titile_en" style="zoom: 67%;" />
 
 ## 更新日志
 
