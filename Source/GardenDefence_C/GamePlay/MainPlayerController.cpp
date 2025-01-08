@@ -27,10 +27,15 @@ void AMainPlayerController::BeginPlay()
 	}
 	CharacterHUD = Cast<AGamePlayHUD>(GetHUD());
 	GrowSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Plant/growplant.growplant'"));
+	RemoveSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Plant/plantremove.plantremove'"));
+
+	GetWorld()->GetTimerManager().SetTimer(DetectPlantAreaHandle, this, &AMainPlayerController::DetectPlantArea, 0.01f, true);
 
 	// Uploading grow placedplant logic.
 	GetWorld()->GetTimerManager().SetTimer(PrePlantHandle, this, &AMainPlayerController::SetPrePlantLocation, 0.01f, true);
 	GetWorld()->GetTimerManager().PauseTimer(PrePlantHandle);
+
+
 
 }
 
@@ -42,12 +47,28 @@ void AMainPlayerController::SetupInputComponent()
 	if (EnhancedInputComponent)
 	{
 		EnhancedInputComponent->BindAction(IA_Cancel, ETriggerEvent::Started, this, &AMainPlayerController::OnCanceledButtonPressed);
+		EnhancedInputComponent->BindAction(IA_Shovel, ETriggerEvent::Started, this, &AMainPlayerController::OnShovelButtonPressed);
+		EnhancedInputComponent->BindAction(IA_Shop, ETriggerEvent::Started, this, &AMainPlayerController::OnShopButtonPressed);
 	}
 }
 
 void AMainPlayerController::OnCanceledButtonPressed()
 {
 	OnCanceledSelectPlant();
+	OnCanceledSelectShovel();
+}
+
+void AMainPlayerController::OnShovelButtonPressed()
+{
+	if (OperationState == EOperationState::EOS_Unoccupied)
+	{
+		OperationState = EOperationState::EOS_Shovel;
+		CharacterHUD->SelectShovel();
+	}
+}
+
+void AMainPlayerController::OnShopButtonPressed()
+{
 }
 
 void AMainPlayerController::SelectPlantInSeedBank(int32 Index)
@@ -75,20 +96,45 @@ void AMainPlayerController::OnCanceledSelectPlant()
 	CharacterHUD->CancelSelectPlantInSeedBank();
 }
 
+void AMainPlayerController::OnCanceledSelectShovel()
+{
+	CharacterHUD->CancelSelectShovel();
+}
+
 void AMainPlayerController::GrowPlacedPlant()
 {
-	if (GrowSoundWave)
-	{
-		UGameplayStatics::PlaySound2D(this, GrowSoundWave);
-	}
 	if (PlacedPlantArea)
 	{
 		if (IInterface_PlantedArea* InPlantedArea = Cast<IInterface_PlantedArea>(PlacedPlantArea))
 		{
-			InPlantedArea->GrowPlant(PlacedPlantName);
+			if (InPlantedArea->GrowPlant(PlacedPlantName))
+			{
+				if (GrowSoundWave)
+				{
+					UGameplayStatics::PlaySound2D(this, GrowSoundWave);
+				}
+			}
 		}
 	}
 	OnCanceledSelectPlant();
+}
+
+void AMainPlayerController::RemovePlacedPlant()
+{
+	if (PlacedPlantArea)
+	{
+		if (IInterface_PlantedArea* InPlantedArea = Cast<IInterface_PlantedArea>(PlacedPlantArea))
+		{
+			if (InPlantedArea->RemovePlant())
+			{
+				if (RemoveSoundWave)
+				{
+					UGameplayStatics::PlaySound2D(this, RemoveSoundWave);
+				}
+			}
+		}
+	}
+	OnCanceledSelectShovel();
 }
 
 FVector AMainPlayerController::GetCursorLocation()
@@ -101,47 +147,37 @@ FVector AMainPlayerController::GetCursorLocation()
 	return FVector::ZeroVector;
 }
 
-
-
 void AMainPlayerController::SetPrePlantLocation()
 {
-	if (PrePlant == nullptr) return;
 	if (OperationState != EOperationState::EOS_SelectingPlant)
 		return;
-	FHitResult HitResult;
-	if (GetWorld()->GetFirstPlayerController()->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_Visibility), true, HitResult))
+
+	if (PrePlant)
 	{
-		FVector Location = HitResult.Location;
-		if (PrePlant)
-		{
-			PrePlant->SetActorLocation(Location);
-		}
-		FVector DetectLocation = Location;
-		DetectLocation.Z = 100.f;
-		FHitResult PlantAreaHitResult;
-		FVector Start = DetectLocation;
-		DetectLocation.Z = -500.f;
-		FVector End = DetectLocation;
+		PrePlant->SetActorLocation(GetCursorLocation());
 
-		// 执行线性追踪
-		bool bHit = GetWorld()->LineTraceSingleByChannel(PlantAreaHitResult, Start, End, ECC_PlantArea);
+	}
+}
 
-		// 绘制射线，颜色根据是否命中改变
-		FColor LineColor = bHit ? FColor::Green : FColor::Red;
-		DrawDebugLine(GetWorld(), Start, End, LineColor, false, 5.0f, 0, 2.0f);
+void AMainPlayerController::DetectPlantArea()
+{
+	FVector CursorLocation = GetCursorLocation();
+	CursorLocation.Z = 100.f;
+	FHitResult PlantAreaHitResult;
+	FVector Start = CursorLocation;
+	CursorLocation.Z = -500.f;
+	FVector End = CursorLocation;
+	bool bHit = GetWorld()->LineTraceSingleByChannel(PlantAreaHitResult, Start, End, ECC_PlantArea);
+	FColor LineColor = bHit ? FColor::Green : FColor::Red;
+	DrawDebugLine(GetWorld(), Start, End, LineColor, false, 5.0f, 0, 2.0f);
 
-		if (bHit)
-		{
-
-			PlacedPlantArea = PlantAreaHitResult.GetActor();
-			if (PlacedPlantArea)
-			{
-			}
-		}
-		else
-		{
-			PlacedPlantArea = nullptr;
-		}
+	if (bHit)
+	{
+		PlacedPlantArea = PlantAreaHitResult.GetActor();
+	}
+	else
+	{
+		PlacedPlantArea = nullptr;
 	}
 }
 

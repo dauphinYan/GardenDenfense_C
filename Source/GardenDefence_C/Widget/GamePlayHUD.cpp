@@ -19,10 +19,24 @@ void AGamePlayHUD::BeginPlay()
 
 void AGamePlayHUD::SelectPlantInSeedBank(int32 Index)
 {
+	if (MainUI == nullptr) return;
 	MainUI->SeedBank->SelectPlantCard(Index);
 }
 
 void AGamePlayHUD::CancelSelectPlantInSeedBank()
 {
-	MainUI->SeedBank->OnCanceledSelect();
+	if (MainUI == nullptr) return;
+	MainUI->SeedBank->OnCanceledSelectPlantCard();
+}
+
+void AGamePlayHUD::SelectShovel()
+{
+	if (MainUI == nullptr) return;
+	MainUI->SeedBank->OnSelectedShovel();
+}
+
+void AGamePlayHUD::CancelSelectShovel()
+{
+	if (MainUI == nullptr) return;
+	MainUI->SeedBank->OnCanceledShovel();
 }

@@ -27,8 +27,8 @@ protected:
 
 public:
 	void SetArrowVisibility(bool bCanSee);
-	virtual void GrowPlant(EPlacedPlantName InPlacedPlantName) override;
-	virtual void RemovePlant() override;
+	virtual bool GrowPlant(EPlacedPlantName InPlacedPlantName) override;
+	virtual bool RemovePlant() override;
 
 private:
 	UPROPERTY(EditDefaultsOnly)

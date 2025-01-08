@@ -1,9 +1,11 @@
 #include "Interface_PlantedArea.h"
 
-void IInterface_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
+bool IInterface_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
 {
+	return false;
 }
 
-void IInterface_PlantedArea::RemovePlant()
+bool IInterface_PlantedArea::RemovePlant()
 {
+	return false;
 }

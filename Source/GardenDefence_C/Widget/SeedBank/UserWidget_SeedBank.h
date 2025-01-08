@@ -17,9 +17,20 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	class UHorizontalBox* PlantBox;
 
+	UPROPERTY()
+	class UUserWidget_Shovel* W_Shovel;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UUserWidget> W_ShovelClass;
+
+	UPROPERTY(meta = (BindWidget))
+	class UImage* Image_Shovel;
+
 	void UpdatePlantBox();
 	void SelectPlantCard(int32 Index);
-	void OnCanceledSelect();
+	void OnCanceledSelectPlantCard();
+	void OnSelectedShovel();
+	void OnCanceledShovel();
 
 
 private:
@@ -39,5 +50,6 @@ private:
 
 	UPROPERTY()
 	class USoundWave* GrowSoundWave;
+
 
 };

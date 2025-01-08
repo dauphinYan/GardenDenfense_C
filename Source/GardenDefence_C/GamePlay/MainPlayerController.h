@@ -18,6 +18,8 @@ public:
 	virtual void SetupInputComponent() override;
 
 	void OnCanceledButtonPressed();
+	void OnShovelButtonPressed();
+	void OnShopButtonPressed();
 
 	UPROPERTY()
 	class AGamePlayHUD* CharacterHUD;
@@ -31,7 +33,9 @@ public:
 
 	void OnSelectedPlant(EPlacedPlantName InPlacedPlantName);
 	void OnCanceledSelectPlant();
+	void OnCanceledSelectShovel();
 	void GrowPlacedPlant();
+	void RemovePlacedPlant();
 	FVector GetCursorLocation();
 
 
@@ -41,6 +45,15 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
 	class UInputAction* IA_Cancel;
+
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
+	class UInputAction* IA_Shovel;
+
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
+	class UInputAction* IA_Shop;
+
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
+	class UInputAction* IA_Setting;
 
 	UPROPERTY()
 	FTimerHandle PrePlantHandle;
@@ -56,6 +69,10 @@ private:
 	UPROPERTY()
 	class USoundWave* GrowSoundWave;
 
+	UPROPERTY()
+	class USoundWave* RemoveSoundWave;
+
 protected:
 	void SetPrePlantLocation();
+	void DetectPlantArea();
 };

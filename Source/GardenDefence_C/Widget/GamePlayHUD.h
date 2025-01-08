@@ -22,6 +22,8 @@ public:
 
 	void SelectPlantInSeedBank(int32 Index);
 	void CancelSelectPlantInSeedBank();
+	void SelectShovel();
+	void CancelSelectShovel();
 
 private:
 	UPROPERTY(EditDefaultsOnly)

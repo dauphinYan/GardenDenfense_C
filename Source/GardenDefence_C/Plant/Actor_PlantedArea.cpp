@@ -44,9 +44,8 @@ void AActor_PlantedArea::OnCursorEnter(UPrimitiveComponent* TouchedComponent)
 {
 	PlayerController = PlayerController == nullptr ? Cast<AMainPlayerController>(GetWorld()->GetFirstPlayerController()) : PlayerController;
 	if (PlayerController == nullptr) return;
-	if (PlayerController->OperationState == EOperationState::EOS_SelectingPlant)
+	if (PlayerController->OperationState == EOperationState::EOS_SelectingPlant || PlayerController->OperationState == EOperationState::EOS_Shovel)
 	{
-
 		SetArrowVisibility(true);
 	}
 
@@ -54,13 +53,9 @@ void AActor_PlantedArea::OnCursorEnter(UPrimitiveComponent* TouchedComponent)
 
 void AActor_PlantedArea::OnCursorLeave(UPrimitiveComponent* TouchedComponent)
 {
+	SetArrowVisibility(false);
 	PlayerController = PlayerController == nullptr ? Cast<AMainPlayerController>(GetWorld()->GetFirstPlayerController()) : PlayerController;
 	if (PlayerController == nullptr) return;
-	if (PlayerController->OperationState == EOperationState::EOS_SelectingPlant)
-	{
-		SetArrowVisibility(false);
-	}
-
 }
 
 void AActor_PlantedArea::Tick(float DeltaTime)
@@ -75,7 +70,7 @@ void AActor_PlantedArea::SetArrowVisibility(bool bCanSee)
 	ArrowWidget->SetVisibility(bCanSee);
 }
 
-void AActor_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
+bool AActor_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
 {
 	switch (InPlacedPlantName)
 	{
@@ -83,12 +78,14 @@ void AActor_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
 		const FString PlantPath = TEXT("Blueprint'/Game/Blueprint/Plant/PlacedPlant/BP_PlacedPlant_SunFlower.BP_PlacedPlant_SunFlower_C'");
 		UClass* PlantClass = StaticLoadClass(AActor_PlacedPlant_SunFlower::StaticClass(), nullptr, *PlantPath);
 
-		FVector SpawnLocation = PlayerController->GetCursorLocation();
-		FRotator SpawnRotation = FRotator::ZeroRotator;
+		FVector SpawnLocation = GetActorLocation();
+		FRotator SpawnRotation(0.f, 90.f, 0.f);
 		Plant = GetWorld()->SpawnActor<AActor_PlacedPlant_SunFlower>(PlantClass, SpawnLocation, SpawnRotation);
 		if (Plant)
 		{
 			bIsPlanted = true;
+			SetArrowVisibility(false);
+			return true;
 		}
 		break;
 		//case EPlacedPlantName::PPN_WallNut:
@@ -106,9 +103,22 @@ void AActor_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
 		//default:
 		//	break;
 	}
+	return false;
 }
 
-void AActor_PlantedArea::RemovePlant()
+bool AActor_PlantedArea::RemovePlant()
 {
+	SetArrowVisibility(false);
+	if (Plant)
+	{
+		Plant->Destroy();
+		Plant = nullptr;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
 }
 

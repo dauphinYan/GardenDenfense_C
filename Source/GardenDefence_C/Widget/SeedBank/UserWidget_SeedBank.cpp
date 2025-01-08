@@ -1,9 +1,13 @@
 #include "UserWidget_SeedBank.h"
 #include "UserWidget_SeedBankOneCard.h"
 #include "Components/HorizontalBox.h"
+#include "Components/Image.h"
 #include "GardenDefence_C/GamePlay/MainPlayerController.h"
 #include "GardenDefence_C/Enum/OperationState.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
+#include "UserWidget_Shovel.h"
 
 
 void UUserWidget_SeedBank::NativeConstruct()
@@ -14,6 +18,9 @@ void UUserWidget_SeedBank::NativeConstruct()
 	UpdatePlantBox();
 
 	SelectSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Plant/SelectPlant.SelectPlant'"));
+
+	W_Shovel = CreateWidget<UUserWidget_Shovel>(PlayerController, W_ShovelClass, "Shovel");
+	W_Shovel->AddToViewport();
 }
 
 void UUserWidget_SeedBank::UpdatePlantBox()
@@ -72,11 +79,23 @@ void UUserWidget_SeedBank::SelectPlantCard(int32 Index)
 	}
 }
 
-void UUserWidget_SeedBank::OnCanceledSelect()
+void UUserWidget_SeedBank::OnCanceledSelectPlantCard()
 {
 	CurIndex = -1;
 	for (int32 i = 0; i < SeedBankCards.Num(); i++)
 	{
 		SeedBankCards[i]->OnCanceled();
 	}
+}
+
+void UUserWidget_SeedBank::OnSelectedShovel()
+{
+	W_Shovel->OnSelectedShovel();
+	Image_Shovel->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UUserWidget_SeedBank::OnCanceledShovel()
+{
+	W_Shovel->OnCanceledShovel();
+	Image_Shovel->SetVisibility(ESlateVisibility::Visible);
 }

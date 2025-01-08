@@ -77,6 +77,9 @@ void AMainCharacter::Attack(const FInputActionValue& InputValue)
 	case EOperationState::EOS_SelectingPlant:
 		PlayerController->GrowPlacedPlant();
 		break;
+	case EOperationState::EOS_Shovel:
+		PlayerController->RemovePlacedPlant();
+		break;
 	}
 }
 
