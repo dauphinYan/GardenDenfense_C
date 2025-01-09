@@ -1,17 +1,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GardenDefence_C/Enum/PlacedPlantName.h"
-#include "Structure_PlacedPlantInfo.generated.h"
+#include "GardenDefence_C/Enum/EquippedPlantName.h"
+#include "Structure_EquippedPlantInfo.generated.h"
 
 USTRUCT(BlueprintType)
-struct FPlacedPlantInfo :public FTableRowBase
+struct FEquippedPlantInfo :public FTableRowBase
 {
 
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
-	EPlacedPlantName PlacedPlantName;
+	EEquippedPlantName eEquippedPlantName;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
 	FText PlantName;
@@ -39,7 +39,4 @@ struct FPlacedPlantInfo :public FTableRowBase
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
 	UTexture2D* PlantImage;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
-	FString MeshPath;
 };
