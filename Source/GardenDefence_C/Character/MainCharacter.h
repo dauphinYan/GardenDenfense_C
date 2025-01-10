@@ -46,4 +46,7 @@ private:
 	class AMainPlayerController* PlayerController;
 
 	EOperationState OperationState;
+
+	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))
+	class UCombatComponent* CombatComponent;
 };
