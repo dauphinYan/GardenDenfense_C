@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "GardenDefence_C/Structure/Structure_EquippedPlantInfo.h"
+#include "GardenDefence_C/Enum/EquippedPlantName.h"
 #include "CombatComponent.generated.h"
 
 
@@ -23,17 +24,21 @@ public:
 	void UploadingBaseAsset();
 	void UpdateEquippedPlant();
 
-	UPROPERTY(EditAnywhere)
-	TArray<FEquippedPlantInfo> EquippedPlantNameInfos; //存放选卡界面已选的植物
+	UFUNCTION(BlueprintCallable)
+	void AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName);
 
-	UPROPERTY(EditAnywhere)
+	UFUNCTION(BlueprintCallable)
+	void RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName);
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TArray<EEquippedPlantName> SelectedEquippedPlantNameInfos; //存放选卡界面已选的植物
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<EEquippedPlantName> OwningEquippedPlantNames; //存放已购买的植物信息
 private:
 
 	UPROPERTY()
 	TMap<EEquippedPlantName, UClass*> PlantClasses; //存放已选植物的蓝图类索引
-
-
 
 	UPROPERTY()
 	TArray<class AActor_EquippedPlant*> EquippedPlantArray; //存放生成的植物Actor

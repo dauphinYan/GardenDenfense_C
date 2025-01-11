@@ -24,6 +24,7 @@ public:
 	void CancelSelectPlantInSeedBank();
 	void SelectShovel();
 	void CancelSelectShovel();
+	void OnShopButtonPressed();
 
 private:
 	UPROPERTY(EditDefaultsOnly)

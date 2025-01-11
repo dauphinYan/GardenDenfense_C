@@ -2,7 +2,6 @@
 #include "MainCharacter.h"
 #include "GardenDefence_C/GamePlay/MainPlayerController.h"
 #include "GardenDefence_C/Plant/Actor_EquippedPlant.h"
-#include "GardenDefence_C/Enum/EquippedPlantName.h"
 
 
 UCombatComponent::UCombatComponent()
@@ -37,20 +36,28 @@ void UCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UCombatComponent::UploadingBaseAsset()
 {
-	for (FEquippedPlantInfo Item : EquippedPlantNameInfos)
+	for (EEquippedPlantName Item : SelectedEquippedPlantNameInfos)
 	{
-		switch (Item.eEquippedPlantName)
+		switch (Item)
 		{
 		case EEquippedPlantName::EPN_Peashooter:
-			PlantClasses.Add(Item.eEquippedPlantName, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_EquippedPlant_PeaShooter.BP_EquippedPlant_PeaShooter_C'")));
+			PlantClasses.Add(Item, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_EquippedPlant_PeaShooter.BP_EquippedPlant_PeaShooter_C'")));
 			break;
 		case EEquippedPlantName::EPN_Repeater:
-			PlantClasses.Add(Item.eEquippedPlantName, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("/Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_EquippedPlant_Repeater.BP_EquippedPlant_Repeater_C'")));
+			PlantClasses.Add(Item, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("/Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_EquippedPlant_Repeater.BP_EquippedPlant_Repeater_C'")));
 			break;
 		default:
 			break;
 		}
 	}
+}
+
+void UCombatComponent::AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName)
+{
+}
+
+void UCombatComponent::RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName)
+{
 }
 
 void UCombatComponent::UpdateEquippedPlant()

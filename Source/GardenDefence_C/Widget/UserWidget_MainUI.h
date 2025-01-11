@@ -7,18 +7,27 @@
 #include "UserWidget_MainUI.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class GARDENDEFENCE_C_API UUserWidget_MainUI : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
 public:
+	virtual void NativeConstruct() override;
+
 	UPROPERTY(meta = (BindWidget))
 	class UUserWidget_SeedBank* SeedBank;
 
+	void SetShopVisibility();
+
 private:
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class UUserWidget_ShopInGame> ShopClass;
+
+	UPROPERTY()
+	UUserWidget_ShopInGame* Shop;
 
 
 };

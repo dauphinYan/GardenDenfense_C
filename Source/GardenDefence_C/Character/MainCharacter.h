@@ -28,6 +28,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
+
 private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
@@ -47,6 +48,13 @@ private:
 
 	EOperationState OperationState;
 
-	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UCombatComponent* CombatComponent;
+
+public:
+	FORCEINLINE UCombatComponent* GetCombatComponent()
+	{
+		if (CombatComponent) return CombatComponent;
+		return nullptr;
+	}
 };

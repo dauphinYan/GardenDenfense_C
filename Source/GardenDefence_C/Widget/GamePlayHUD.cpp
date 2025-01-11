@@ -40,3 +40,8 @@ void AGamePlayHUD::CancelSelectShovel()
 	if (MainUI == nullptr) return;
 	MainUI->SeedBank->OnCanceledShovel();
 }
+
+void AGamePlayHUD::OnShopButtonPressed()
+{
+	MainUI->SetShopVisibility();
+}

@@ -69,6 +69,7 @@ void AMainPlayerController::OnShovelButtonPressed()
 
 void AMainPlayerController::OnShopButtonPressed()
 {
+	CharacterHUD->OnShopButtonPressed();
 }
 
 void AMainPlayerController::SelectPlantInSeedBank(int32 Index)
