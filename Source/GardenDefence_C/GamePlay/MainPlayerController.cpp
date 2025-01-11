@@ -148,6 +148,11 @@ FVector AMainPlayerController::GetCursorLocation()
 	return FVector::ZeroVector;
 }
 
+void AMainPlayerController::RefreshBag()
+{
+	CharacterHUD->RefreshBag();
+}
+
 void AMainPlayerController::SetPrePlantLocation()
 {
 	if (OperationState != EOperationState::EOS_SelectingPlant)

@@ -23,6 +23,7 @@ void UUserWidget_MainUI::SetShopVisibility()
 		{
 			// is in View.
 			Shop->RemoveFromParent();
+			Shop->OnViewportClosed();
 		}
 		else
 		{
@@ -31,4 +32,9 @@ void UUserWidget_MainUI::SetShopVisibility()
 		}
 	}
 
+}
+
+void UUserWidget_MainUI::RefreshShopBag()
+{
+	Shop->RefreshBag();
 }

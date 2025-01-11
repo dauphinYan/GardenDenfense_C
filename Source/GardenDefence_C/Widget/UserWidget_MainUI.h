@@ -21,6 +21,7 @@ public:
 	class UUserWidget_SeedBank* SeedBank;
 
 	void SetShopVisibility();
+	void RefreshShopBag();
 
 private:
 	UPROPERTY(EditDefaultsOnly)

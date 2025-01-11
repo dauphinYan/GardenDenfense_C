@@ -22,21 +22,22 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void UploadingBaseAsset();
+
+	UFUNCTION(BlueprintCallable)
 	void UpdateEquippedPlant();
 
 	UFUNCTION(BlueprintCallable)
-	void AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName);
+	bool AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName);
 
 	UFUNCTION(BlueprintCallable)
-	void RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName);
+	bool RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName);
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<EEquippedPlantName> SelectedEquippedPlantNameInfos; //存放选卡界面已选的植物
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<EEquippedPlantName> OwningEquippedPlantNames; //存放已购买的植物信息
 private:
-
 	UPROPERTY()
 	TMap<EEquippedPlantName, UClass*> PlantClasses; //存放已选植物的蓝图类索引
 

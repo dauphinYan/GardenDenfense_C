@@ -45,3 +45,8 @@ void AGamePlayHUD::OnShopButtonPressed()
 {
 	MainUI->SetShopVisibility();
 }
+
+void AGamePlayHUD::RefreshBag()
+{
+	MainUI->RefreshShopBag();
+}

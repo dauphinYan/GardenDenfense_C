@@ -52,12 +52,30 @@ void UCombatComponent::UploadingBaseAsset()
 	}
 }
 
-void UCombatComponent::AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName)
+bool UCombatComponent::AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName)
 {
+	if (OwningEquippedPlantNames.Num() >= 6)
+	{
+		return false;
+	}
+	else
+	{
+		OwningEquippedPlantNames.Add(EquippedPlantName);
+		PlayerController->RefreshBag();
+		return true;
+	}
 }
 
-void UCombatComponent::RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName)
+bool UCombatComponent::RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName)
 {
+	int32 Index = OwningEquippedPlantNames.IndexOfByKey(EquippedPlantName);
+	if (Index != INDEX_NONE)
+	{
+		OwningEquippedPlantNames.RemoveAt(Index);
+		PlayerController->RefreshBag();
+		return true;
+	}
+	return false;
 }
 
 void UCombatComponent::UpdateEquippedPlant()

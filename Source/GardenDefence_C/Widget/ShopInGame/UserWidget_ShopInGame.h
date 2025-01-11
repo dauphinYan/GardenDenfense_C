@@ -8,7 +8,7 @@
 
 /**
  *
- */ 
+ */
 UCLASS()
 class GARDENDEFENCE_C_API UUserWidget_ShopInGame : public UUserWidget
 {
@@ -17,16 +17,31 @@ class GARDENDEFENCE_C_API UUserWidget_ShopInGame : public UUserWidget
 public:
 	virtual void NativeConstruct() override;
 
+	UFUNCTION(BlueprintCallable)
+	void OnViewportClosed();
+
+	UPROPERTY(BlueprintReadWrite)
+	TArray<class UTextBlock*> PlantTexts;
+
+	UPROPERTY(BlueprintReadWrite)
+	TArray<class UImage*> PlantImages;
+
+	UFUNCTION(BlueprintCallable)
+	void RefreshBag();
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void GetNecObject();
 
-	//UPROPERTY(meta = (BindWidget))
-	//class UButton* Button_Quit;
+
 
 private:
 	UPROPERTY()
 	class AMainCharacter* Character;
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UCombatComponent* CombatComponent;
+
+	FString DataTablePath;
+	UPROPERTY();
+	UDataTable* PlantDataTable;
 };

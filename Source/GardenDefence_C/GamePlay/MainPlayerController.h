@@ -37,6 +37,7 @@ public:
 	void GrowPlacedPlant();
 	void RemovePlacedPlant();
 	FVector GetCursorLocation();
+	void RefreshBag();
 
 
 private:
