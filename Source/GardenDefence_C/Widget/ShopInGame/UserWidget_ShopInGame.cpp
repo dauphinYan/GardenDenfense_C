@@ -32,16 +32,6 @@ void UUserWidget_ShopInGame::RefreshBag()
 			return;
 		}
 
-		if (CombatComponent->OwningEquippedPlantNames.Num() <= i)
-		{
-			if (FEquippedPlantInfo* Item = PlantDataTable->FindRow<FEquippedPlantInfo>(TEXT("NoPlant"), TEXT("Plant Info")))
-			{
-				PlantTexts[i]->SetText(FText::FromString(TEXT(" ")));
-				PlantImages[i]->SetBrushResourceObject(Item->PlantImage);
-			}
-			break;
-		}
-
 		TArray<FName> RowNames = PlantDataTable->GetRowNames();
 		for (FName RowName : RowNames)
 		{

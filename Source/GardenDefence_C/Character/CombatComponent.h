@@ -27,10 +27,10 @@ public:
 	void UpdateEquippedPlant();
 
 	UFUNCTION(BlueprintCallable)
-	bool AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName);
+	bool AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName, int32 Index);
 
 	UFUNCTION(BlueprintCallable)
-	bool RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName);
+	bool RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName, int32 Index);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<EEquippedPlantName> SelectedEquippedPlantNameInfos; //存放选卡界面已选的植物

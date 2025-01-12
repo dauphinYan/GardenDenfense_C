@@ -14,6 +14,8 @@ UCombatComponent::UCombatComponent()
 	EquippedPlantSocketOffset.Add(FVector(-100, 0, 50));  // 后面
 	EquippedPlantSocketOffset.Add(FVector(-50, -50, 50)); // 左后
 	EquippedPlantSocketOffset.Add(FVector(0, -100, 50));  // 右后
+
+	OwningEquippedPlantNames = { EEquippedPlantName::EPN_None,EEquippedPlantName::EPN_None,EEquippedPlantName::EPN_None,EEquippedPlantName::EPN_None,EEquippedPlantName::EPN_None,EEquippedPlantName::EPN_None };
 }
 
 void UCombatComponent::BeginPlay()
@@ -52,26 +54,26 @@ void UCombatComponent::UploadingBaseAsset()
 	}
 }
 
-bool UCombatComponent::AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName)
+bool UCombatComponent::AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName, int32 Index)
 {
-	if (OwningEquippedPlantNames.Num() >= 6)
+	for (int32 i = 0; i < OwningEquippedPlantNames.Num(); i++)
 	{
-		return false;
+		if (OwningEquippedPlantNames[i] == EEquippedPlantName::EPN_None)
+		{
+			OwningEquippedPlantNames[i] = EquippedPlantName;
+			PlayerController->RefreshBag();
+			return true;
+		}
 	}
-	else
-	{
-		OwningEquippedPlantNames.Add(EquippedPlantName);
-		PlayerController->RefreshBag();
-		return true;
-	}
+	return false;
 }
 
-bool UCombatComponent::RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName)
+bool UCombatComponent::RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName, int32 Index)
 {
-	int32 Index = OwningEquippedPlantNames.IndexOfByKey(EquippedPlantName);
-	if (Index != INDEX_NONE)
+	if (Index >= 6) return false;
+	if (OwningEquippedPlantNames[Index] != EEquippedPlantName::EPN_None)
 	{
-		OwningEquippedPlantNames.RemoveAt(Index);
+		OwningEquippedPlantNames[Index] = EEquippedPlantName::EPN_None;
 		PlayerController->RefreshBag();
 		return true;
 	}
@@ -80,6 +82,10 @@ bool UCombatComponent::RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlan
 
 void UCombatComponent::UpdateEquippedPlant()
 {
+	for (AActor_EquippedPlant* Equipment : EquippedPlantArray)
+	{
+		Equipment->Destroy();
+	}
 	EquippedPlantArray.Empty();
 	for (int32 i = 0; i < OwningEquippedPlantNames.Num(); i++)
 	{
