@@ -26,12 +26,17 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	class UImage* Image_Shovel;
 
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* SunValueText;
+
 	void UpdatePlantBox();
 	void SelectPlantCard(int32 Index);
 	void OnCanceledSelectPlantCard();
 	void OnSelectedShovel();
 	void OnCanceledShovel();
 
+	UFUNCTION()
+	void UpdateSunValue();
 
 private:
 	UPROPERTY(EditDefaultsOnly)
@@ -49,7 +54,11 @@ private:
 	class USoundWave* SelectSoundWave;
 
 	UPROPERTY()
-	class USoundWave* GrowSoundWave;
+	USoundWave* PauseSoundWave;
 
+	UPROPERTY()
+	USoundWave* GrowSoundWave;
 
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class AMainGameStateBase* GameState;
 };

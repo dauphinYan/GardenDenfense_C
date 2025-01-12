@@ -26,6 +26,7 @@ public:
 	void CancelSelectShovel();
 	void OnShopButtonPressed();
 	void RefreshBag();
+	void UpdateSun();
 
 private:
 	UPROPERTY(EditDefaultsOnly)

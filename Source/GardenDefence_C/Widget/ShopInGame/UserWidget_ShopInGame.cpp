@@ -5,6 +5,7 @@
 #include "GardenDefence_C//Structure/Structure_EquippedPlantInfo.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
+#include "GardenDefence_C/GamePlay/MainGameStateBase.h"
 
 void UUserWidget_ShopInGame::NativeConstruct()
 {
@@ -20,6 +21,7 @@ void UUserWidget_ShopInGame::GetNecObject()
 {
 	Character = Character == nullptr ? Character = Cast<AMainCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn()) : Character;
 	CombatComponent = CombatComponent == nullptr ? CombatComponent = Character->GetCombatComponent() : CombatComponent;
+	GameState = GameState == nullptr ? GameState = Cast<AMainGameStateBase>(GetWorld()->GetGameState()) : GameState;
 }
 
 void UUserWidget_ShopInGame::RefreshBag()
@@ -45,6 +47,14 @@ void UUserWidget_ShopInGame::RefreshBag()
 			}
 		}
 	}
+}
+
+void UUserWidget_ShopInGame::UpdateSunValue()
+{
+	GameState = GameState == nullptr ? GameState = Cast<AMainGameStateBase>(GetWorld()->GetGameState()) : GameState;
+	int32 SunValueInteger = FMath::FloorToInt(GameState->GetSunValue());
+	FString SunValueString = FString::FromInt(SunValueInteger);
+	SunValueText->SetText(FText::FromString(SunValueString));
 }
 
 void UUserWidget_ShopInGame::OnViewportClosed()

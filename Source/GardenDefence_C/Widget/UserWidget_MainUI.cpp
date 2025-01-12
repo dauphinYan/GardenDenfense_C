@@ -1,5 +1,6 @@
 #include "UserWidget_MainUI.h"
 #include "ShopInGame/UserWidget_ShopInGame.h"
+#include "SeedBank/UserWidget_SeedBank.h"
 
 void UUserWidget_MainUI::NativeConstruct()
 {
@@ -37,4 +38,10 @@ void UUserWidget_MainUI::SetShopVisibility()
 void UUserWidget_MainUI::RefreshShopBag()
 {
 	Shop->RefreshBag();
+}
+
+void UUserWidget_MainUI::UpdateSun()
+{
+	Shop->UpdateSunValue();
+	SeedBank->UpdateSunValue();
 }

@@ -57,4 +57,5 @@ private:
 
 public:
 	FORCEINLINE EPlacedPlantName GetPlantName() { return PlacedPlantInfo.PlacedPlantName; }
+	FORCEINLINE float GetSunValue() { return PlacedPlantInfo.Sun; }
 };

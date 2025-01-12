@@ -29,6 +29,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RefreshBag();
 
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* SunValueText;
+
+	UFUNCTION()
+	void UpdateSunValue();
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void GetNecObject();
@@ -40,6 +46,8 @@ private:
 	class AMainCharacter* Character;
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UCombatComponent* CombatComponent;
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class AMainGameStateBase* GameState;
 
 	FString DataTablePath;
 	UPROPERTY();

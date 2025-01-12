@@ -14,9 +14,7 @@ void UUserWidget_SeedBankOneCard::NativeConstruct()
 	{
 		ButtonChoose->OnClicked.AddDynamic(this, &UUserWidget_SeedBankOneCard::OnButtonChooseClicked);
 	}
-
 	PlayerController = Cast<AMainPlayerController>(GetWorld()->GetFirstPlayerController());
-
 }
 
 void UUserWidget_SeedBankOneCard::OnButtonChooseClicked()

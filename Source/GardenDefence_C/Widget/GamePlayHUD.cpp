@@ -43,10 +43,18 @@ void AGamePlayHUD::CancelSelectShovel()
 
 void AGamePlayHUD::OnShopButtonPressed()
 {
+	if (MainUI == nullptr) return;
 	MainUI->SetShopVisibility();
 }
 
 void AGamePlayHUD::RefreshBag()
 {
+	if (MainUI == nullptr) return;
 	MainUI->RefreshShopBag();
+}
+
+void AGamePlayHUD::UpdateSun()
+{
+	if (MainUI == nullptr) return;
+	MainUI->UpdateSun();
 }

@@ -22,6 +22,7 @@ public:
 
 	void SetShopVisibility();
 	void RefreshShopBag();
+	void UpdateSun();
 
 private:
 	UPROPERTY(EditDefaultsOnly)

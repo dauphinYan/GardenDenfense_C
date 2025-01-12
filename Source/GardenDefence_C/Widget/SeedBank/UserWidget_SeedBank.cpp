@@ -2,8 +2,10 @@
 #include "UserWidget_SeedBankOneCard.h"
 #include "Components/HorizontalBox.h"
 #include "Components/Image.h"
+#include "Components/TextBlock.h"
 #include "GardenDefence_C/GamePlay/MainPlayerController.h"
 #include "GardenDefence_C/Enum/OperationState.h"
+#include "GardenDefence_C/GamePlay/MainGameStateBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
@@ -18,6 +20,7 @@ void UUserWidget_SeedBank::NativeConstruct()
 	UpdatePlantBox();
 
 	SelectSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Plant/SelectPlant.SelectPlant'"));
+	PauseSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/UI/pause.pause'"));
 
 	W_Shovel = CreateWidget<UUserWidget_Shovel>(PlayerController, W_ShovelClass, "Shovel");
 	W_Shovel->AddToViewport();
@@ -61,11 +64,21 @@ void UUserWidget_SeedBank::SelectPlantCard(int32 Index)
 	}
 	else//第一次选择
 	{
+		GameState = GameState == nullptr ? GameState = Cast<AMainGameStateBase>(GetWorld()->GetGameState()) : GameState;
+		if (GameState->GetSunValue() < SeedBankCards[Index]->GetSunValue())
+		{
+			if (PauseSoundWave)
+			{
+				UGameplayStatics::PlaySound2D(this, PauseSoundWave);
+			}
+			return;
+		}
 		CurIndex = Index;
 		for (int32 i = 0; i < SeedBankCards.Num(); i++)
 		{
 			SeedBankCards[i]->OnCanceled();
 		}
+
 		if (SelectSoundWave)
 		{
 			UGameplayStatics::PlaySound2D(this, SelectSoundWave);
@@ -98,4 +111,12 @@ void UUserWidget_SeedBank::OnCanceledShovel()
 {
 	W_Shovel->OnCanceledShovel();
 	Image_Shovel->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UUserWidget_SeedBank::UpdateSunValue()
+{
+	GameState = GameState == nullptr ? GameState = Cast<AMainGameStateBase>(GetWorld()->GetGameState()) : GameState;
+	int32 SunValueInteger = FMath::FloorToInt(GameState->GetSunValue());
+	FString SunValueString = FString::FromInt(SunValueInteger);
+	SunValueText->SetText(FText::FromString(SunValueString));
 }

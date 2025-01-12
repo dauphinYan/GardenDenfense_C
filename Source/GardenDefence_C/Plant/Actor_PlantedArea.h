@@ -28,6 +28,7 @@ protected:
 public:
 	void SetArrowVisibility(bool bCanSee);
 	virtual bool GrowPlant(EPlacedPlantName InPlacedPlantName) override;
+
 	virtual bool RemovePlant() override;
 
 private:
@@ -40,8 +41,13 @@ private:
 	UPROPERTY()
 	class AMainPlayerController* PlayerController;
 
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class AMainGameStateBase* GameState;
+
 	UPROPERTY()
 	AActor* Plant;
 
 	bool bIsPlanted = false;
+
+	void GetSelectedPlantInfo(EPlacedPlantName InPlacedPlantName);
 };

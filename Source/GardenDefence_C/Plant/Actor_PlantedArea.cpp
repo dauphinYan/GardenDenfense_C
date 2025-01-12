@@ -7,6 +7,8 @@
 #include "GardenDefence_C/Enum/OperationState.h"
 #include "GardenDefence_C/Plant/Actor_PlacedPlant.h"
 #include "GardenDefence_C/Plant/PlacedPlant/Actor_PlacedPlant_SunFlower.h"
+#include "GardenDefence_C/Structure/Structure_PlacedPlantInfo.h"
+#include "GardenDefence_C/GamePlay/MainGameStateBase.h"
 
 AActor_PlantedArea::AActor_PlantedArea()
 {
@@ -72,12 +74,12 @@ void AActor_PlantedArea::SetArrowVisibility(bool bCanSee)
 
 bool AActor_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
 {
+
 	switch (InPlacedPlantName)
 	{
 	case EPlacedPlantName::PPN_SunFlower:
 		const FString PlantPath = TEXT("Blueprint'/Game/Blueprint/Plant/PlacedPlant/BP_PlacedPlant_SunFlower.BP_PlacedPlant_SunFlower_C'");
 		UClass* PlantClass = StaticLoadClass(AActor_PlacedPlant_SunFlower::StaticClass(), nullptr, *PlantPath);
-
 		FVector SpawnLocation = GetActorLocation();
 		FRotator SpawnRotation(0.f, 90.f, 0.f);
 		Plant = GetWorld()->SpawnActor<AActor_PlacedPlant_SunFlower>(PlantClass, SpawnLocation, SpawnRotation);
@@ -85,6 +87,7 @@ bool AActor_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
 		{
 			bIsPlanted = true;
 			SetArrowVisibility(false);
+			GetSelectedPlantInfo(InPlacedPlantName);
 			return true;
 		}
 		break;
@@ -104,6 +107,27 @@ bool AActor_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
 		//	break;
 	}
 	return false;
+}
+
+void AActor_PlantedArea::GetSelectedPlantInfo(EPlacedPlantName InPlacedPlantName)
+{
+	const FString DataTablePath = TEXT("DataTable'/Game/Blueprint/DataTable/DT_PlacedPlantInfo.DT_PlacedPlantInfo'");
+	UDataTable* PlantDataTable = LoadObject<UDataTable>(nullptr, *DataTablePath);
+	if (PlantDataTable == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to load DataTable at path: %s"), *DataTablePath);
+	}
+	TArray<FName> RowNames = PlantDataTable->GetRowNames();
+	for (int32 i = 0; i < RowNames.Num(); i++)
+	{
+		FPlacedPlantInfo* RowData = PlantDataTable->FindRow<FPlacedPlantInfo>(RowNames[i], TEXT("Plant Info"));
+		if (RowData && RowData->PlacedPlantName == InPlacedPlantName)
+		{
+			GameState = GameState == nullptr ? GameState = Cast<AMainGameStateBase>(GetWorld()->GetGameState()) : GameState;
+			GameState->AddSunValue(-RowData->Sun);
+			break;
+		}
+	}
 }
 
 bool AActor_PlantedArea::RemovePlant()

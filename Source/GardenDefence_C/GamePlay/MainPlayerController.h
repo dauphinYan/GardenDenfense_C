@@ -38,7 +38,7 @@ public:
 	void RemovePlacedPlant();
 	FVector GetCursorLocation();
 	void RefreshBag();
-
+	
 
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "EnhancedInput", meta = (AllowPrivateAccess = "true"))
