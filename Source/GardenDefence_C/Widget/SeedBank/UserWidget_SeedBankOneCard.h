@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "GardenDefence_C/Structure/Structure_PlacedPlantInfo.h"
+#include "GardenDefence_C/Structure/Structure_PlantInfo.h"
 #include "UserWidget_SeedBankOneCard.generated.h"
 
 UCLASS()

@@ -1,5 +1,5 @@
 #include "Actor_PrePlacedPlant.h"
-#include "GardenDefence_C/Structure/Structure_PlacedPlantInfo.h"
+#include "GardenDefence_C/Structure/Structure_PlantInfo.h"
 #include "Components/StaticMeshComponent.h"
 
 AActor_PrePlacedPlant::AActor_PrePlacedPlant()

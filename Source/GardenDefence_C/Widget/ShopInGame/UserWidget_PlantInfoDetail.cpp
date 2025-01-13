@@ -2,7 +2,7 @@
 
 
 #include "UserWidget_PlantInfoDetail.h"
-#include "GardenDefence_C/Structure/Structure_EquippedPlantInfo.h"
+#include "GardenDefence_C/Structure/Structure_PlantInfo.h"
 #include "GardenDefence_C/Character/MainCharacter.h"
 #include "GardenDefence_C/Character/CombatComponent.h"
 #include "GardenDefence_C/GamePlay/MainGameStateBase.h"

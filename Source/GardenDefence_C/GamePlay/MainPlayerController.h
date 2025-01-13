@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "GardenDefence_C/Enum/OperationState.h"
-#include "GardenDefence_C/Enum/PlacedPlantName.h"
+#include "GardenDefence_C/Enum/PlantName.h"
 #include "EnhancedInputSubsystems.h"
 #include "MainPlayerController.generated.h"
 

@@ -2,8 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "GardenDefence_C/Structure/Structure_EquippedPlantInfo.h"
-#include "GardenDefence_C/Enum/EquippedPlantName.h"
+#include "GardenDefence_C/Structure/Structure_PlantInfo.h"
+#include "GardenDefence_C/Enum/PlantName.h"
 #include "CombatComponent.generated.h"
 
 

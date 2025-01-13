@@ -1,8 +1,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GardenDefence_C/Enum/PlacedPlantName.h"
-#include "Structure_PlacedPlantInfo.generated.h"
+#include "GardenDefence_C/Enum/PlantName.h"
+#include "Structure_PlantInfo.generated.h"
 
 USTRUCT(BlueprintType)
 struct FPlacedPlantInfo :public FTableRowBase
@@ -42,4 +42,41 @@ struct FPlacedPlantInfo :public FTableRowBase
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
 	FString MeshPath;
+};
+
+USTRUCT(BlueprintType)
+struct FEquippedPlantInfo :public FTableRowBase
+{
+
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
+	EEquippedPlantName eEquippedPlantName;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
+	FText PlantName;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
+	FText PlantDescription;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
+	float Health;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
+	float Damage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
+	float AtkSpeed;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
+	float Sun;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
+	float Price;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
+	float CoolingTime;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Plant Info")
+	UTexture2D* PlantImage;
 };

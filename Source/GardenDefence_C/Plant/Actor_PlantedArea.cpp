@@ -7,7 +7,7 @@
 #include "GardenDefence_C/Enum/OperationState.h"
 #include "GardenDefence_C/Plant/Actor_PlacedPlant.h"
 #include "GardenDefence_C/Plant/PlacedPlant/Actor_PlacedPlant_SunFlower.h"
-#include "GardenDefence_C/Structure/Structure_PlacedPlantInfo.h"
+#include "GardenDefence_C/Structure/Structure_PlantInfo.h"
 #include "GardenDefence_C/GamePlay/MainGameStateBase.h"
 
 AActor_PlantedArea::AActor_PlantedArea()

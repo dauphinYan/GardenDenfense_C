@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GardenDefence_C/Interface/Interface_PlantedArea.h"
-#include "GardenDefence_C/Enum/PlacedPlantName.h"
+#include "GardenDefence_C/Enum/PlantName.h"
 #include "Actor_PlantedArea.generated.h"
 
 UCLASS()

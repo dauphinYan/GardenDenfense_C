@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "GardenDefence_C/Enum/PlacedPlantName.h"
+#include "GardenDefence_C/Enum/PlantName.h"
 #include "Interface_PlantedArea.generated.h"
 
 UINTERFACE(MinimalAPI)
