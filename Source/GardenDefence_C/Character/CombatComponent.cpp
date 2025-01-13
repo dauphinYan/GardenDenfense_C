@@ -54,7 +54,7 @@ void UCombatComponent::UploadingBaseAsset()
 	}
 }
 
-bool UCombatComponent::AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName, int32 Index)
+bool UCombatComponent::AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName, int32 Index) // Index¿ÉÉ¾³ý
 {
 	for (int32 i = 0; i < OwningEquippedPlantNames.Num(); i++)
 	{

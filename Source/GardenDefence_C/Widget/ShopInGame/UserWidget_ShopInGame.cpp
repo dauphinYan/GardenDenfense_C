@@ -1,11 +1,12 @@
 #include "UserWidget_ShopInGame.h"
 #include "GardenDefence_C/Character/MainCharacter.h"
 #include "GardenDefence_C/Character/CombatComponent.h"
+#include "GardenDefence_C/GamePlay/MainGameStateBase.h"
 #include "Components/Button.h"
-#include "GardenDefence_C//Structure/Structure_EquippedPlantInfo.h"
+#include "GardenDefence_C/Structure/Structure_EquippedPlantInfo.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
-#include "GardenDefence_C/GamePlay/MainGameStateBase.h"
+#include "UserWidget_PlantInfoDetail.h"
 
 void UUserWidget_ShopInGame::NativeConstruct()
 {
@@ -26,26 +27,9 @@ void UUserWidget_ShopInGame::GetNecObject()
 
 void UUserWidget_ShopInGame::RefreshBag()
 {
-	for (int32 i = 0; i < 6; i++)
+	for (UUserWidget_PlantInfoDetail* PlantInfoPanel : PlantInfoPanels)
 	{
-		if (PlantDataTable == nullptr)
-		{
-			UE_LOG(LogTemp, Error, TEXT("Failed to load DataTable at path: %s"), *DataTablePath);
-			return;
-		}
-
-		TArray<FName> RowNames = PlantDataTable->GetRowNames();
-		for (FName RowName : RowNames)
-		{
-			FEquippedPlantInfo* Item = PlantDataTable->FindRow<FEquippedPlantInfo>(RowName, TEXT("Plant Info"));
-
-			if (Item->eEquippedPlantName != CombatComponent->OwningEquippedPlantNames[i]) continue;
-			else
-			{
-				PlantTexts[i]->SetText(Item->PlantName);
-				PlantImages[i]->SetBrushResourceObject(Item->PlantImage);
-			}
-		}
+		PlantInfoPanel->UpdateInfo();
 	}
 }
 

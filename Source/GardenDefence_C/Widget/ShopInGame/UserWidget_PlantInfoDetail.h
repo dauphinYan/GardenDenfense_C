@@ -4,39 +4,38 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "UserWidget_ShopInGame.generated.h"
+#include "UserWidget_PlantInfoDetail.generated.h"
 
 /**
  *
  */
 UCLASS()
-class GARDENDEFENCE_C_API UUserWidget_ShopInGame : public UUserWidget
+class GARDENDEFENCE_C_API UUserWidget_PlantInfoDetail : public UUserWidget
 {
 	GENERATED_BODY()
+
+
 
 public:
 	virtual void NativeConstruct() override;
 
-	UFUNCTION(BlueprintCallable)
-	void OnViewportClosed();
-
 	UPROPERTY(BlueprintReadWrite)
-	TArray<class UUserWidget_PlantInfoDetail*> PlantInfoPanels;
-
-	UFUNCTION(BlueprintCallable)
-	void RefreshBag();
+	int32 Index;
 
 	UPROPERTY(meta = (BindWidget))
-	class UTextBlock* SunValueText;
+	class UTextBlock* MainPlantText;
 
-	UFUNCTION()
-	void UpdateSunValue();
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* PlantText;
 
-protected:
+	UPROPERTY(meta = (BindWidget))
+	class UImage* MainPlantImage;
+
+	UPROPERTY(meta = (BindWidget))
+	class UImage* PlantImage;
+
 	UFUNCTION(BlueprintCallable)
-	void GetNecObject();
-
-
+	void UpdateInfo();
 
 private:
 	UPROPERTY()
@@ -45,6 +44,8 @@ private:
 	class UCombatComponent* CombatComponent;
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class AMainGameStateBase* GameState;
+
+
 
 	FString DataTablePath;
 	UPROPERTY();
