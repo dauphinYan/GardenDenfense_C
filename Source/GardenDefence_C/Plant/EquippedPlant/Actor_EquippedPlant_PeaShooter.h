@@ -1,4 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -13,5 +12,8 @@ UCLASS()
 class GARDENDEFENCE_C_API AActor_EquippedPlant_PeaShooter : public AActor_EquippedPlant
 {
 	GENERATED_BODY()
-	
+
+protected:
+	virtual void SearchEnemy() override;
+	virtual void AttackEnemy() override;
 };

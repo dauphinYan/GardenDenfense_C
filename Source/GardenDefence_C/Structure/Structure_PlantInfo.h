@@ -83,6 +83,9 @@ struct FEquippedPlantInfo :public FTableRowBase
 	float AtkSpeed;
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Plant Property")
+	float AtkRange;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Plant Property")
 	float Sun;
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Plant Property")

@@ -9,7 +9,7 @@ struct FZombieInfo : public FTableRowBase
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Info")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	EZombieName eZombieName;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Info")
@@ -18,24 +18,24 @@ struct FZombieInfo : public FTableRowBase
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Info")
 	FText ZombieDescription;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Info")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Property")
 	float Health;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Info")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Property")
 	float Damage;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Info")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Property")
 	float AtkSpeed;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Info")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Property")
 	float MoveSpeed;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Info")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Property")
 	float Cost;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Info")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Property")
 	float CoolingTime;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Info")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Resourse")
 	UTexture2D* ZombieImage;
 };
