@@ -15,7 +15,14 @@ UCombatComponent::UCombatComponent()
 	EquippedPlantSocketOffset.Add(FVector(-50, -50, 50)); // ×óºó
 	EquippedPlantSocketOffset.Add(FVector(0, -100, 50));  // ÓÒºó
 
-	OwningEquippedPlantNames = { EEquippedPlantName::EPN_None,EEquippedPlantName::EPN_None,EEquippedPlantName::EPN_None,EEquippedPlantName::EPN_None,EEquippedPlantName::EPN_None,EEquippedPlantName::EPN_None };
+	OwningEquippedPlants = {
+		{EEquippedPlantName::EPN_None, 1},
+		{EEquippedPlantName::EPN_None, 1},
+		{EEquippedPlantName::EPN_None, 1},
+		{EEquippedPlantName::EPN_None, 1},
+		{EEquippedPlantName::EPN_None, 1},
+		{EEquippedPlantName::EPN_None, 1}
+	};
 }
 
 void UCombatComponent::BeginPlay()
@@ -54,13 +61,14 @@ void UCombatComponent::UploadingBaseAsset()
 	}
 }
 
-bool UCombatComponent::AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName, int32 Index) // Index¿ÉÉ¾³ý
+bool UCombatComponent::AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName)
 {
-	for (int32 i = 0; i < OwningEquippedPlantNames.Num(); i++)
+	for (int32 i = 0; i < OwningEquippedPlants.Num(); i++)
 	{
-		if (OwningEquippedPlantNames[i] == EEquippedPlantName::EPN_None)
+		if (OwningEquippedPlants[i].PlantName == EEquippedPlantName::EPN_None)
 		{
-			OwningEquippedPlantNames[i] = EquippedPlantName;
+			OwningEquippedPlants[i].PlantName = EquippedPlantName;
+			OwningEquippedPlants[i].PlantLevel = 1;
 			PlayerController->RefreshBag();
 			return true;
 		}
@@ -68,12 +76,25 @@ bool UCombatComponent::AddOwningEquippedPlant(EEquippedPlantName EquippedPlantNa
 	return false;
 }
 
+bool UCombatComponent::EnhanceOwningEquippedPlant(int32 Index)
+{
+	if (OwningEquippedPlants[Index].PlantName != EEquippedPlantName::EPN_None)
+	{
+		OwningEquippedPlants[Index].PlantLevel++;
+		PlayerController->RefreshBag();
+		return true;
+	}
+
+	return false;
+}
+
 bool UCombatComponent::RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName, int32 Index)
 {
 	if (Index >= 6) return false;
-	if (OwningEquippedPlantNames[Index] != EEquippedPlantName::EPN_None)
+	if (OwningEquippedPlants[Index].PlantName != EEquippedPlantName::EPN_None)
 	{
-		OwningEquippedPlantNames[Index] = EEquippedPlantName::EPN_None;
+		OwningEquippedPlants[Index].PlantName = EEquippedPlantName::EPN_None;
+		OwningEquippedPlants[Index].PlantLevel = 1;
 		PlayerController->RefreshBag();
 		return true;
 	}
@@ -87,11 +108,11 @@ void UCombatComponent::UpdateEquippedPlant()
 		Equipment->Destroy();
 	}
 	EquippedPlantArray.Empty();
-	for (int32 i = 0; i < OwningEquippedPlantNames.Num(); i++)
+	for (int32 i = 0; i < OwningEquippedPlants.Num(); i++)
 	{
-		if (PlantClasses.Contains(OwningEquippedPlantNames[i]))
+		if (PlantClasses.Contains(OwningEquippedPlants[i].PlantName))
 		{
-			AActor_EquippedPlant* SpawnPlant = GetWorld()->SpawnActor<AActor_EquippedPlant>(PlantClasses[OwningEquippedPlantNames[i]], Character->GetActorLocation() + EquippedPlantSocketOffset[i], FRotator::ZeroRotator);
+			AActor_EquippedPlant* SpawnPlant = GetWorld()->SpawnActor<AActor_EquippedPlant>(PlantClasses[OwningEquippedPlants[i].PlantName], Character->GetActorLocation() + EquippedPlantSocketOffset[i], FRotator::ZeroRotator);
 			SpawnPlant->AttachToActor(Character, FAttachmentTransformRules::KeepWorldTransform);
 			EquippedPlantArray.Add(SpawnPlant);
 		}
@@ -101,4 +122,3 @@ void UCombatComponent::UpdateEquippedPlant()
 		}
 	}
 }
-

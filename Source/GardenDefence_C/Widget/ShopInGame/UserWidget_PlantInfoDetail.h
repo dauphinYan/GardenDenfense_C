@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "GardenDefence_C/Structure/Structure_PlantInfo.h"
 #include "UserWidget_PlantInfoDetail.generated.h"
 
 /**
@@ -26,16 +27,32 @@ public:
 	class UTextBlock* MainPlantText;
 
 	UPROPERTY(meta = (BindWidget))
-	class UTextBlock* PlantText;
+	UTextBlock* PlantText;
 
 	UPROPERTY(meta = (BindWidget))
 	class UImage* MainPlantImage;
 
 	UPROPERTY(meta = (BindWidget))
-	class UImage* PlantImage;
+	UImage* PlantImage;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* LevelText;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* CurEffectText;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton* EnhanceButton;
 
 	UFUNCTION(BlueprintCallable)
 	void UpdateInfo();
+
+	UFUNCTION(BlueprintCallable)
+	void EnhancedPlant();
+
+protected:
+	UPROPERTY(BlueprintReadOnly)
+	struct FEquippedPlantInfo CurPlantItem;
 
 private:
 	UPROPERTY()
@@ -45,9 +62,9 @@ private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class AMainGameStateBase* GameState;
 
-
-
 	FString DataTablePath;
 	UPROPERTY();
 	UDataTable* PlantDataTable;
+
+
 };

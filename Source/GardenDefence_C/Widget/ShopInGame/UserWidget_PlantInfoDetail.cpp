@@ -2,12 +2,13 @@
 
 
 #include "UserWidget_PlantInfoDetail.h"
-#include "GardenDefence_C/Structure/Structure_PlantInfo.h"
+
 #include "GardenDefence_C/Character/MainCharacter.h"
 #include "GardenDefence_C/Character/CombatComponent.h"
 #include "GardenDefence_C/GamePlay/MainGameStateBase.h"
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
+#include "Components/Button.h"
 
 void UUserWidget_PlantInfoDetail::NativeConstruct()
 {
@@ -19,6 +20,11 @@ void UUserWidget_PlantInfoDetail::NativeConstruct()
 
 	DataTablePath = TEXT("DataTable'/Game/Blueprint/DataTable/DT_EquippedPlantInfo.DT_EquippedPlantInfo'");
 	PlantDataTable = LoadObject<UDataTable>(nullptr, *DataTablePath);
+
+	if (EnhanceButton)
+	{
+		EnhanceButton->OnClicked.AddDynamic(this, &UUserWidget_PlantInfoDetail::EnhancedPlant);
+	}
 }
 
 void UUserWidget_PlantInfoDetail::UpdateInfo()
@@ -35,14 +41,49 @@ void UUserWidget_PlantInfoDetail::UpdateInfo()
 		FEquippedPlantInfo* Item = PlantDataTable->FindRow<FEquippedPlantInfo>(RowName, TEXT("Plant Info"));
 		Character = Character == nullptr ? Character = Cast<AMainCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn()) : Character;
 		CombatComponent = CombatComponent == nullptr ? CombatComponent = Character->GetCombatComponent() : CombatComponent;
-		if (Item->eEquippedPlantName != CombatComponent->OwningEquippedPlantNames[Index]) continue;
+		if (Item->eEquippedPlantName != CombatComponent->OwningEquippedPlants[Index].PlantName) continue;
 		else
 		{
-			MainPlantText->SetText(Item->PlantName);
-			PlantText->SetText(Item->PlantName);
-			MainPlantImage->SetBrushResourceObject(Item->PlantImage);
-			PlantImage->SetBrushResourceObject(Item->PlantImage);
+			CurPlantItem = *Item;
+			MainPlantText->SetText(CurPlantItem.PlantName);
+			PlantText->SetText(CurPlantItem.PlantName);
+			MainPlantImage->SetBrushResourceObject(CurPlantItem.PlantImage);
+			PlantImage->SetBrushResourceObject(CurPlantItem.PlantImage);
+			LevelText->SetText(FText::AsNumber(CombatComponent->OwningEquippedPlants[Index].PlantLevel));
+			FText InputText;
+			for (int i = 0; i < CombatComponent->OwningEquippedPlants[Index].PlantLevel; i++)
+			{
+				if (i < CurPlantItem.SkillTree.Description.Num())
+				{
+					if (InputText.IsEmpty())
+					{
+						InputText = CurPlantItem.SkillTree.Description[i];
+					}
+					else
+					{
+						InputText = FText::Join(FText::FromString(TEXT("\n")), InputText, CurPlantItem.SkillTree.Description[i]);
+					}
+				}
+			}
+			CurEffectText->SetText(InputText);
 		}
 	}
 }
 
+void UUserWidget_PlantInfoDetail::EnhancedPlant()
+{
+	CombatComponent = CombatComponent == nullptr ? CombatComponent = Character->GetCombatComponent() : CombatComponent;
+	if (CombatComponent->OwningEquippedPlants[Index].PlantLevel < CurPlantItem.SkillTree.Level)
+	{
+		if (CombatComponent->EnhanceOwningEquippedPlant(Index))
+		{
+			// success
+
+		}
+		else
+		{
+			// error
+
+		}
+	}
+}

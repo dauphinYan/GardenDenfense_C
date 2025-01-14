@@ -6,6 +6,17 @@
 #include "GardenDefence_C/Enum/PlantName.h"
 #include "CombatComponent.generated.h"
 
+USTRUCT(BlueprintType)
+struct FEquippedPlantOrder
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+	EEquippedPlantName PlantName;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+	int32 PlantLevel;
+};
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class GARDENDEFENCE_C_API UCombatComponent : public UActorComponent
@@ -27,22 +38,26 @@ public:
 	void UpdateEquippedPlant();
 
 	UFUNCTION(BlueprintCallable)
-	bool AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName, int32 Index);
+	bool AddOwningEquippedPlant(EEquippedPlantName EquippedPlantName);
+
+	UFUNCTION(BlueprintCallable)
+	bool EnhanceOwningEquippedPlant(int32 Index);
 
 	UFUNCTION(BlueprintCallable)
 	bool RemoveOwningEquippedPlant(EEquippedPlantName EquippedPlantName, int32 Index);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<EEquippedPlantName> SelectedEquippedPlantNameInfos; //存放选卡界面已选的植物
+	TArray<EEquippedPlantName> SelectedEquippedPlantNameInfos; // selected plant.
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<EEquippedPlantName> OwningEquippedPlantNames; //存放已购买的植物信息
+	TArray<FEquippedPlantOrder> OwningEquippedPlants; // owning plant info: PlantName, PlantLevel.
+
 private:
 	UPROPERTY()
-	TMap<EEquippedPlantName, UClass*> PlantClasses; //存放已选植物的蓝图类索引
+	TMap<EEquippedPlantName, UClass*> PlantClasses; // plant class.
 
 	UPROPERTY()
-	TArray<class AActor_EquippedPlant*> EquippedPlantArray; //存放生成的植物Actor
+	TArray<class AActor_EquippedPlant*> EquippedPlantArray; // spawned plant actors.
 
 	UPROPERTY(EditAnywhere)
 	TArray<FVector> EquippedPlantSocketOffset;
