@@ -174,9 +174,8 @@ void AMainPlayerController::DetectPlantArea()
 	CursorLocation.Z = -500.f;
 	FVector End = CursorLocation;
 	bool bHit = GetWorld()->LineTraceSingleByChannel(PlantAreaHitResult, Start, End, ECC_PlantArea);
-	FColor LineColor = bHit ? FColor::Green : FColor::Red;
-	DrawDebugLine(GetWorld(), Start, End, LineColor, false, 5.0f, 0, 2.0f);
-
+	//FColor LineColor = bHit ? FColor::Green : FColor::Red;
+	//DrawDebugLine(GetWorld(), Start, End, LineColor, false, 5.0f, 0, 2.0f);
 	if (bHit)
 	{
 		PlacedPlantArea = PlantAreaHitResult.GetActor();

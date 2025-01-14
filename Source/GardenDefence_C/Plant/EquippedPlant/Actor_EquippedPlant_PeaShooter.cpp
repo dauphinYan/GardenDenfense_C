@@ -1,4 +1,21 @@
 #include "Actor_EquippedPlant_PeaShooter.h"
+#include "GardenDefence_C/Plant/BulletPool.h"
+#include "GardenDefence_C/Plant/BulletBase.h"
+
+AActor_EquippedPlant_PeaShooter::AActor_EquippedPlant_PeaShooter()
+{
+	BulletPool = CreateDefaultSubobject<UBulletPool>(TEXT("BulletPool"));
+}
+
+void AActor_EquippedPlant_PeaShooter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (BulletPool)
+	{
+		BulletPool->InitializePool();
+	}
+}
 
 void AActor_EquippedPlant_PeaShooter::SearchEnemy()
 {
@@ -15,7 +32,7 @@ void AActor_EquippedPlant_PeaShooter::SearchEnemy()
 	{
 		float ClosestDistance = FLT_MAX;
 		AActor* ClosestEnemy = nullptr;
-		for (FOverlapResult Result : OverlapResults)
+		for (const FOverlapResult Result : OverlapResults)
 		{
 			AActor* Enemy = Result.GetActor();
 			float Distance = (Enemy->GetActorLocation() - Location).Size();
@@ -37,10 +54,14 @@ void AActor_EquippedPlant_PeaShooter::AttackEnemy()
 	{
 		FVector Direction = TargetEnemy->GetActorLocation() - GetActorLocation();
 		Direction.Z = 0;
-
 		FRotator LookAtRotation = Direction.Rotation();
-
 		SetActorRotation(LookAtRotation);
+
+		ABulletBase* Bullet = BulletPool->GetBullet();
+		if (Bullet)
+		{
+			Bullet->ActivateBullet(GetActorLocation(), LookAtRotation.Vector());
+		}
 	}
 }
 

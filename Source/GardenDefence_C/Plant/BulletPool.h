@@ -5,26 +5,30 @@
 #include "BulletPool.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class GARDENDEFENCE_C_API UBulletPool : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	UBulletPool();
 
-	void InitializePool(TSubclassOf<class ABullet> BulletClass, int32 PoolSize);
+	void InitializePool();
+	class ABulletBase* GetBullet();
 
 protected:
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
 	UPROPERTY()
-	TArray<class ABullet*> BulletPool;
+	TArray<ABulletBase*> BulletPool;
 
-	UPROPERTY()
-	TSubclassOf<ABullet> BulletClass;
+	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess))
+	TSubclassOf<ABulletBase> BulletClass;
+
+	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess))
+	int32 PoolSize = 1;
 };

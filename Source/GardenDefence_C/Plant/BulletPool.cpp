@@ -1,4 +1,5 @@
 #include "BulletPool.h"
+#include "BulletBase.h"
 
 UBulletPool::UBulletPool()
 {
@@ -6,22 +7,11 @@ UBulletPool::UBulletPool()
 
 }
 
-void UBulletPool::InitializePool(TSubclassOf<class ABullet> BulletClass, int32 PoolSize)
-{
-	for (int32 i = 0; i < PoolSize; i++)
-	{
-        ABullet* Bullet = GetWorld()->SpawnActor<ABullet>(BulletClass);
-		
-	}
-}
-
-
-
 void UBulletPool::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+
 }
 
 void UBulletPool::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -31,3 +21,24 @@ void UBulletPool::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 
 }
 
+void UBulletPool::InitializePool()
+{
+	for (int32 i = 0; i < PoolSize; i++)
+	{
+		ABulletBase* Bullet = GetWorld()->SpawnActor<ABulletBase>(BulletClass);
+		BulletPool.Add(Bullet);
+		Bullet->DeactivateBullet();
+	}
+}
+
+ABulletBase* UBulletPool::GetBullet()
+{
+	for (ABulletBase* Bullet : BulletPool)
+	{
+		if (!Bullet->IsInUse())
+		{
+			return Bullet;
+		}
+	}
+	return nullptr;
+}
