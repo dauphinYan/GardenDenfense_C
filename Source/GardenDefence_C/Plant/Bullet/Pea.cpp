@@ -33,15 +33,20 @@ void APea::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimiti
 void APea::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Log, TEXT("Pea overlapped with: %s"), *OtherActor->GetName());
-	if (NiagaraSystem && GetWorld())
+	if (HitNiagaraSystem && GetWorld())
 	{
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(
 			GetWorld(),
-			NiagaraSystem,
+			HitNiagaraSystem,
 			OtherActor->GetActorLocation(),
 			FRotator::ZeroRotator,
 			FVector(1.0f)
 		);
+	}
+
+	if (HitSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, OtherActor->GetActorLocation());
 	}
 
 	DeactivateBullet();

@@ -19,7 +19,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	virtual void SearchEnemy() override;
+	//virtual void SearchEnemy() override;
 	virtual void AttackEnemy() override;
 
 private:

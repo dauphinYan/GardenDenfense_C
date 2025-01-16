@@ -114,6 +114,7 @@ void UCombatComponent::UpdateEquippedPlant()
 		{
 			AActor_EquippedPlant* SpawnPlant = GetWorld()->SpawnActor<AActor_EquippedPlant>(PlantClasses[OwningEquippedPlants[i].PlantName], Character->GetActorLocation() + EquippedPlantSocketOffset[i], FRotator::ZeroRotator);
 			SpawnPlant->AttachToActor(Character, FAttachmentTransformRules::KeepWorldTransform);
+			SpawnPlant->SetOwner(Character);
 			EquippedPlantArray.Add(SpawnPlant);
 		}
 		else

@@ -42,6 +42,36 @@ void AActor_EquippedPlant::BeginPlay()
 
 void AActor_EquippedPlant::SearchEnemy()
 {
+	FVector Location = GetActorLocation();
+	TArray<FOverlapResult> OverlapResults;
+
+	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(AtkRange);
+	FCollisionQueryParams CollisionQueryParams;
+	CollisionQueryParams.AddIgnoredActor(this);
+
+	bool bHasHit = GetWorld()->OverlapMultiByObjectType(OverlapResults, Location, FQuat::Identity, ECC_Enemy, CollisionShape, CollisionQueryParams);
+
+	if (bHasHit)
+	{
+		float ClosestDistance = FLT_MAX;
+		AActor* ClosestEnemy = nullptr;
+		for (const FOverlapResult& Result : OverlapResults)
+		{
+			AActor* Enemy = Result.GetActor();
+			float Distance = (Enemy->GetActorLocation() - Location).Size();
+			if (ClosestDistance > Distance)
+			{
+				ClosestDistance = Distance;
+				ClosestEnemy = Enemy;
+			}
+		}
+		TargetEnemy = ClosestEnemy;
+	}
+	else
+		TargetEnemy = nullptr;
+
+	if (TargetEnemy)
+		DrawDebugSphere(GetWorld(), TargetEnemy->GetActorLocation(), 50.f, 24, FColor::Red, false, 1.0f);
 }
 
 void AActor_EquippedPlant::AttackEnemy()

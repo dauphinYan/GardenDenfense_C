@@ -23,13 +23,11 @@ void UUserWidget_MainUI::SetShopVisibility()
 	{
 		if (Shop->IsInViewport())
 		{
-			// 商店界面已经在视图中，关闭它
 			Shop->RemoveFromParent();
-			Shop->OnViewportClosed(); // 调用自定义关闭事件
+			Shop->OnViewportClosed();
 		}
 		else
 		{
-			// 商店界面不在视图中，打开它
 			Shop->AddToViewport();
 		}
 	}
