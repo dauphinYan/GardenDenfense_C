@@ -32,7 +32,7 @@ void AActor_EquippedPlant_PeaShooter::SearchEnemy()
 	{
 		float ClosestDistance = FLT_MAX;
 		AActor* ClosestEnemy = nullptr;
-		for (const FOverlapResult Result : OverlapResults)
+		for (const FOverlapResult& Result : OverlapResults)
 		{
 			AActor* Enemy = Result.GetActor();
 			float Distance = (Enemy->GetActorLocation() - Location).Size();

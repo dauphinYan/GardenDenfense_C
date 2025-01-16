@@ -18,19 +18,24 @@ void UUserWidget_MainUI::SetShopVisibility()
 	{
 		Shop = CreateWidget<UUserWidget_ShopInGame>(GetWorld()->GetFirstPlayerController(), ShopClass);
 	}
-	if (Shop)
+
+	if (Shop && IsValid(Shop))
 	{
 		if (Shop->IsInViewport())
 		{
-			// is in View.
+			// 商店界面已经在视图中，关闭它
 			Shop->RemoveFromParent();
-			Shop->OnViewportClosed();
+			Shop->OnViewportClosed(); // 调用自定义关闭事件
 		}
 		else
 		{
-			// is not in View.
+			// 商店界面不在视图中，打开它
 			Shop->AddToViewport();
 		}
+	}
+	else
+	{
+		Shop = CreateWidget<UUserWidget_ShopInGame>(GetWorld()->GetFirstPlayerController(), ShopClass);
 	}
 
 }

@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "NiagaraFunctionLibrary.h"
+#include "Components/SphereComponent.h"
 #include "BulletBase.generated.h"
 
 UCLASS()
@@ -21,15 +23,33 @@ public:
 	void ActivateBullet(const FVector& Location, const FVector& Direction);
 	void DeactivateBullet();
 
-private:
+protected:
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* BulletMesh;
+
 	UPROPERTY(EditDefaultsOnly)
 	class UProjectileMovementComponent* ProjectileMovement;
+
+	UPROPERTY(EditDefaultsOnly)
+	class USphereComponent* CollisionComponent;
+
+	UFUNCTION()
+	virtual void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
+	UFUNCTION()
+	virtual void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UPROPERTY(EditDefaultsOnly)
+	UNiagaraSystem* NiagaraSystem;
+
+private:
+
 
 	bool bInUse = false;
 
 	FTimerHandle DeactivateTimerHandle;
+
+
 public:
 	FORCEINLINE bool IsInUse() { return bInUse; };
 };
