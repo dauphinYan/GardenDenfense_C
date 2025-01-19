@@ -31,4 +31,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess))
 	int32 PoolSize = 1;
+
+	float BulletDamage = 1;
 };

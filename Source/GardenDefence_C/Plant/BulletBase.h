@@ -5,6 +5,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "GardenDefence_C/Interface/Interface_Enemy.h"
 #include "BulletBase.generated.h"
 
 UCLASS()
@@ -21,7 +22,7 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 
-	void ActivateBullet(const FVector& Location, const FVector& Direction);
+	void ActivateBullet(const FVector& Location, const FVector& Direction, float InBulletDamage);
 	void DeactivateBullet();
 
 protected:
@@ -48,6 +49,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	USoundWave* EmitterSound;
+
+	float BulletDamage = 1;;
 
 private:
 	bool bInUse = false;

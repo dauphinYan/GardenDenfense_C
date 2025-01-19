@@ -12,7 +12,20 @@ class GARDENDEFENCE_C_API AActor_EquippedPlant_Repeater : public AActor_Equipped
 {
 	GENERATED_BODY()
 
+public:
+	AActor_EquippedPlant_Repeater();
+
 protected:
-	virtual void SearchEnemy() override;
+	virtual void BeginPlay() override;
 	virtual void AttackEnemy() override;
+
+	void FireBullet();
+
+private:
+	UPROPERTY(EditDefaultsOnly)
+	class UBulletPool* BulletPool;
+
+	int32 NumShots = 2;
+	int32 ShotsRemaining = NumShots;
+	FTimerHandle ShootHandle;
 };

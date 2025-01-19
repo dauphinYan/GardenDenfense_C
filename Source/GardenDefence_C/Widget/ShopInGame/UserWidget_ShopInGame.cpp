@@ -8,14 +8,19 @@
 #include "Components/TextBlock.h"
 #include "UserWidget_PlantInfoDetail.h"
 
+void UUserWidget_ShopInGame::NativeOnInitialized()
+{
+	Super::NativeOnInitialized();
+
+	DataTablePath = TEXT("DataTable'/Game/Blueprint/DataTable/DT_EquippedPlantInfo.DT_EquippedPlantInfo'");
+	PlantDataTable = LoadObject<UDataTable>(nullptr, *DataTablePath);
+}
+
 void UUserWidget_ShopInGame::NativeConstruct()
 {
 	Super::NativeConstruct();
 
 	GetNecObject();
-
-	DataTablePath = TEXT("DataTable'/Game/Blueprint/DataTable/DT_EquippedPlantInfo.DT_EquippedPlantInfo'");
-	PlantDataTable = LoadObject<UDataTable>(nullptr, *DataTablePath);
 }
 
 void UUserWidget_ShopInGame::GetNecObject()

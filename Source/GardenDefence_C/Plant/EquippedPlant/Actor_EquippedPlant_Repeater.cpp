@@ -1,46 +1,57 @@
 #include "Actor_EquippedPlant_Repeater.h"
+#include "GardenDefence_C/Plant/BulletPool.h"
+#include "GardenDefence_C/Plant/BulletBase.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "TimerManager.h"
 
-void AActor_EquippedPlant_Repeater::SearchEnemy()
+AActor_EquippedPlant_Repeater::AActor_EquippedPlant_Repeater()
 {
-	FVector Location = GetActorLocation();
-	TArray<FOverlapResult> OverlapResults;
+	BulletPool = CreateDefaultSubobject<UBulletPool>(TEXT("BulletPool"));
+}
 
-	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(AtkRange);
-	FCollisionQueryParams CollisionQueryParams;
-	CollisionQueryParams.AddIgnoredActor(this);
+void AActor_EquippedPlant_Repeater::BeginPlay()
+{
+	Super::BeginPlay();
 
-	bool bHasHit = GetWorld()->OverlapMultiByChannel(OverlapResults, Location, FQuat::Identity, ECC_Enemy, CollisionShape, CollisionQueryParams);
-
-	if (bHasHit)
+	if (BulletPool)
 	{
-		float ClosestDistance = FLT_MAX;
-		AActor* ClosestEnemy = nullptr;
-		for (FOverlapResult Result : OverlapResults)
-		{
-			AActor* Enemy = Result.GetActor();
-			float Distance = (Enemy->GetActorLocation() - Location).Size();
-			if (ClosestDistance > Distance)
-			{
-				ClosestDistance = Distance;
-				ClosestEnemy = Enemy;
-			}
-		}
-		TargetEnemy = ClosestEnemy;
+		BulletPool->InitializePool();
 	}
-	else
-		TargetEnemy = nullptr;
 }
 
 void AActor_EquippedPlant_Repeater::AttackEnemy()
 {
 	if (TargetEnemy)
 	{
+		if (!ShootHandle.IsValid())
+		{
+			GetWorld()->GetTimerManager().SetTimer(ShootHandle, this, &AActor_EquippedPlant_Repeater::FireBullet, 0.1f, true);
+
+		}
+	}
+}
+
+void AActor_EquippedPlant_Repeater::FireBullet()
+{
+	if (ShotsRemaining > 0)
+	{
 		FVector Direction = TargetEnemy->GetActorLocation() - GetActorLocation();
 		Direction.Z = 0;
-
 		FRotator LookAtRotation = Direction.Rotation();
-
 		SetActorRotation(LookAtRotation);
+
+		ABulletBase* Bullet = BulletPool->GetBullet();
+		if (Bullet)
+		{
+			Bullet->ActivateBullet(GetActorLocation(), LookAtRotation.Vector(), Damage);
+		}
+		ShotsRemaining--;
+
+		if (ShotsRemaining <= 0)
+		{
+			ShotsRemaining = NumShots;
+			GetWorld()->GetTimerManager().ClearTimer(ShootHandle);
+		}
 	}
 }
 

@@ -50,13 +50,13 @@ private:
 	UPROPERTY()
 	class AMainPlayerController* PlayerController;
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	class USoundWave* SelectSoundWave;
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	USoundWave* PauseSoundWave;
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	USoundWave* GrowSoundWave;
 
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

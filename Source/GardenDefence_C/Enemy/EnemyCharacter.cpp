@@ -6,7 +6,7 @@
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -15,8 +15,13 @@ AEnemyCharacter::AEnemyCharacter()
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 
+
+}
+
+bool AEnemyCharacter::IsAlive()
+{
+	return bIsAlive;
 }
 
 // Called every frame

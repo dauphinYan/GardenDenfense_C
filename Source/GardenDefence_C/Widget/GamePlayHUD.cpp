@@ -10,9 +10,8 @@ void AGamePlayHUD::BeginPlay()
 	Super::BeginPlay();
 
 	APlayerController* PlayerController = GetOwningPlayerController();
-	if (PlayerController)
+	if (PlayerController && MainUI)
 	{
-		MainUI = CreateWidget<UUserWidget_MainUI>(PlayerController, MainUIClass);
 		MainUI->AddToViewport();
 	}
 }

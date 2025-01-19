@@ -19,9 +19,6 @@ void UUserWidget_SeedBank::NativeConstruct()
 	PlayerController = Cast<AMainPlayerController>(GetWorld()->GetFirstPlayerController());
 	UpdatePlantBox();
 
-	SelectSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Plant/SelectPlant.SelectPlant'"));
-	PauseSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/UI/pause.pause'"));
-
 	W_Shovel = CreateWidget<UUserWidget_Shovel>(PlayerController, W_ShovelClass, "Shovel");
 	W_Shovel->AddToViewport();
 }

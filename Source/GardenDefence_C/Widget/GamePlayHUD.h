@@ -17,7 +17,7 @@ class GARDENDEFENCE_C_API AGamePlayHUD : public AHUD
 public:
 	virtual void BeginPlay() override;
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	class UUserWidget_MainUI* MainUI;
 
 	void SelectPlantInSeedBank(int32 Index);
@@ -29,6 +29,4 @@ public:
 	void UpdateSun();
 
 private:
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class UUserWidget> MainUIClass;
 };

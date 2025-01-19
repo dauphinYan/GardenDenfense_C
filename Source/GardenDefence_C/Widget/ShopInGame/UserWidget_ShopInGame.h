@@ -15,6 +15,7 @@ class GARDENDEFENCE_C_API UUserWidget_ShopInGame : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	virtual void NativeOnInitialized() override;
 	virtual void NativeConstruct() override;
 
 	UFUNCTION(BlueprintCallable)

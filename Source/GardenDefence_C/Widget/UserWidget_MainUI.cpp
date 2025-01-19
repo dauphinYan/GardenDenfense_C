@@ -14,12 +14,7 @@ void UUserWidget_MainUI::NativeConstruct()
 
 void UUserWidget_MainUI::SetShopVisibility()
 {
-	if (Shop == nullptr && ShopClass)
-	{
-		Shop = CreateWidget<UUserWidget_ShopInGame>(GetWorld()->GetFirstPlayerController(), ShopClass);
-	}
-
-	if (Shop && IsValid(Shop))
+	if (Shop)
 	{
 		if (Shop->IsInViewport())
 		{
@@ -31,11 +26,6 @@ void UUserWidget_MainUI::SetShopVisibility()
 			Shop->AddToViewport();
 		}
 	}
-	else
-	{
-		Shop = CreateWidget<UUserWidget_ShopInGame>(GetWorld()->GetFirstPlayerController(), ShopClass);
-	}
-
 }
 
 void UUserWidget_MainUI::RefreshShopBag()
