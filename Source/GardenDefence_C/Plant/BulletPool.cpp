@@ -23,12 +23,16 @@ void UBulletPool::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 
 void UBulletPool::InitializePool()
 {
-	for (int32 i = 0; i < PoolSize; i++)
+	if (BulletClass)
 	{
-		ABulletBase* Bullet = GetWorld()->SpawnActor<ABulletBase>(BulletClass);
-		BulletPool.Add(Bullet);
-		Bullet->DeactivateBullet();
+		for (int32 i = 0; i < PoolSize; i++)
+		{
+			ABulletBase* Bullet = GetWorld()->SpawnActor<ABulletBase>(BulletClass);
+			BulletPool.Add(Bullet);
+			Bullet->DeactivateBullet();
+		}
 	}
+
 }
 
 ABulletBase* UBulletPool::GetBullet()

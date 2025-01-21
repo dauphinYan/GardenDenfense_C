@@ -18,12 +18,13 @@ void UUserWidget_MainUI::SetShopVisibility()
 	{
 		if (Shop->IsInViewport())
 		{
-			Shop->RemoveFromParent();
 			Shop->OnViewportClosed();
+			Shop->RemoveFromParent();
 		}
 		else
 		{
 			Shop->AddToViewport();
+			Shop->OnViewportAdded();
 		}
 	}
 }
@@ -35,6 +36,8 @@ void UUserWidget_MainUI::RefreshShopBag()
 
 void UUserWidget_MainUI::UpdateSun()
 {
-	Shop->UpdateSunValue();
-	SeedBank->UpdateSunValue();
+	if (Shop)
+		Shop->UpdateSunValue();
+	if (SeedBank)
+		SeedBank->UpdateSunValue();
 }

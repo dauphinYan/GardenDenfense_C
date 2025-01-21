@@ -4,6 +4,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "GardenDefence_C/Plant/BulletPool.h"
 
+
 ABulletBase::ABulletBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -23,6 +24,10 @@ ABulletBase::ABulletBase()
 	CollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &ABulletBase::OnBeginOverlap);
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
+
+	TailNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Tail"));
+	TailNiagaraComponent->SetupAttachment(RootComponent);
+
 }
 
 void ABulletBase::BeginPlay()
@@ -47,6 +52,7 @@ void ABulletBase::ActivateBullet(const FVector& Location, const FVector& Directi
 	SetActorTickEnabled(true);
 	SetActorEnableCollision(true);
 	SetActorHiddenInGame(false);
+
 
 	GetWorld()->GetTimerManager().SetTimer(DeactivateTimerHandle, this, &ABulletBase::DeactivateBullet, 5.0f, false);
 }

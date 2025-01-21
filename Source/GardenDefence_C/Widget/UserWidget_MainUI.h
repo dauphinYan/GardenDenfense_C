@@ -30,6 +30,4 @@ private:
 
 	UPROPERTY()
 	UUserWidget_ShopInGame* Shop;
-
-
 };

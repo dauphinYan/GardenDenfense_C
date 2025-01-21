@@ -55,6 +55,9 @@ void UCombatComponent::UploadingBaseAsset()
 		case EEquippedPlantName::EPN_Repeater:
 			PlantClasses.Add(Item, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("/Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_EquippedPlant_Repeater.BP_EquippedPlant_Repeater_C'")));
 			break;
+		case EEquippedPlantName::EPN_SnowPea:
+			PlantClasses.Add(Item, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_SnowPeaShooter.BP_SnowPeaShooter_C'")));
+			break;
 		default:
 			break;
 		}

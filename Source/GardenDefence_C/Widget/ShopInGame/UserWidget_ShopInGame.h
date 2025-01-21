@@ -18,6 +18,9 @@ public:
 	virtual void NativeOnInitialized() override;
 	virtual void NativeConstruct() override;
 
+	UFUNCTION()
+	void OnViewportAdded();
+
 	UFUNCTION(BlueprintCallable)
 	void OnViewportClosed();
 
@@ -36,8 +39,6 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void GetNecObject();
-
-
 
 private:
 	UPROPERTY()

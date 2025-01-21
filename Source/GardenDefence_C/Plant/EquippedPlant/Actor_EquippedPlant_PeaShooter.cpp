@@ -5,6 +5,7 @@
 AActor_EquippedPlant_PeaShooter::AActor_EquippedPlant_PeaShooter()
 {
 	BulletPool = CreateDefaultSubobject<UBulletPool>(TEXT("BulletPool"));
+	EquippedPlantName = EEquippedPlantName::EPN_Peashooter;
 }
 
 void AActor_EquippedPlant_PeaShooter::BeginPlay()

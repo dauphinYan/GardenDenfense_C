@@ -23,6 +23,8 @@ void UUserWidget_ShopInGame::NativeConstruct()
 	GetNecObject();
 }
 
+
+
 void UUserWidget_ShopInGame::GetNecObject()
 {
 	Character = Character == nullptr ? Character = Cast<AMainCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn()) : Character;
@@ -46,7 +48,19 @@ void UUserWidget_ShopInGame::UpdateSunValue()
 	SunValueText->SetText(FText::FromString(SunValueString));
 }
 
+void UUserWidget_ShopInGame::OnViewportAdded()
+{
+	UpdateSunValue();
+}
+
 void UUserWidget_ShopInGame::OnViewportClosed()
 {
 	CombatComponent->UpdateEquippedPlant();
+	for (auto Panel : PlantInfoPanels)
+	{
+		if (Panel->EnhanceButton)
+		{
+			Panel->EnhanceButton->OnClicked.RemoveDynamic(Panel, &UUserWidget_PlantInfoDetail::EnhancedPlant);
+		}
+	}
 }

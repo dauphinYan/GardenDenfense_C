@@ -1,11 +1,13 @@
-#include "Pea.h"
+// Fill out your copyright notice in the Description page of Project Settings.
 
-APea::APea()
+
+#include "SnowPea.h"
+
+ASnowPea::ASnowPea()
 {
-
 }
 
-void APea::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void ASnowPea::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (HitNiagaraSystem && GetWorld())
 	{

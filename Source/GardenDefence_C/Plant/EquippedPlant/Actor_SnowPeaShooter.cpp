@@ -1,16 +1,16 @@
-#include "Actor_EquippedPlant_Repeater.h"
+#include "Actor_SnowPeaShooter.h"
 #include "GardenDefence_C/Plant/BulletPool.h"
 #include "GardenDefence_C/Plant/BulletBase.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "TimerManager.h"
 
-AActor_EquippedPlant_Repeater::AActor_EquippedPlant_Repeater()
+AActor_SnowPeaShooter::AActor_SnowPeaShooter()
 {
 	BulletPool = CreateDefaultSubobject<UBulletPool>(TEXT("BulletPool"));
-	EquippedPlantName = EEquippedPlantName::EPN_Repeater;
+	EquippedPlantName = EEquippedPlantName::EPN_SnowPea;
 }
 
-void AActor_EquippedPlant_Repeater::BeginPlay()
+void AActor_SnowPeaShooter::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -20,19 +20,19 @@ void AActor_EquippedPlant_Repeater::BeginPlay()
 	}
 }
 
-void AActor_EquippedPlant_Repeater::AttackEnemy()
+void AActor_SnowPeaShooter::AttackEnemy()
 {
 	if (TargetEnemy)
 	{
 		if (!ShootHandle.IsValid())
 		{
-			GetWorld()->GetTimerManager().SetTimer(ShootHandle, this, &AActor_EquippedPlant_Repeater::FireBullet, 0.1f, true);
+			GetWorld()->GetTimerManager().SetTimer(ShootHandle, this, &AActor_SnowPeaShooter::FireBullet, 0.1f, true);
 
 		}
 	}
 }
 
-void AActor_EquippedPlant_Repeater::FireBullet()
+void AActor_SnowPeaShooter::FireBullet()
 {
 	if (ShotsRemaining > 0)
 	{
@@ -55,4 +55,3 @@ void AActor_EquippedPlant_Repeater::FireBullet()
 		}
 	}
 }
-

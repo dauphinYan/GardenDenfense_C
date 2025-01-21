@@ -13,6 +13,7 @@ void AGamePlayHUD::BeginPlay()
 	if (PlayerController && MainUI)
 	{
 		MainUI->AddToViewport();
+		MainUI->UpdateSun();
 	}
 }
 
