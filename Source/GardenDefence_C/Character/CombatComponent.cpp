@@ -50,13 +50,13 @@ void UCombatComponent::UploadingBaseAsset()
 		switch (Item)
 		{
 		case EEquippedPlantName::EPN_Peashooter:
-			PlantClasses.Add(Item, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_EquippedPlant_PeaShooter.BP_EquippedPlant_PeaShooter_C'")));
+			PlantClasses.Add(Item, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_PeaShooter.BP_PeaShooter_C'")));
 			break;
 		case EEquippedPlantName::EPN_Repeater:
-			PlantClasses.Add(Item, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("/Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_EquippedPlant_Repeater.BP_EquippedPlant_Repeater_C'")));
+			PlantClasses.Add(Item, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_Repeater.BP_Repeater'")));
 			break;
 		case EEquippedPlantName::EPN_SnowPea:
-			PlantClasses.Add(Item, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_SnowPeaShooter.BP_SnowPeaShooter_C'")));
+			PlantClasses.Add(Item, StaticLoadClass(AActor::StaticClass(), nullptr, TEXT("Blueprint'/Game/Blueprint/Plant/EquippedPlant/BP_SnowPeaShooter.BP_SnowPeaShooter'")));
 			break;
 		default:
 			break;
