@@ -26,8 +26,8 @@ void AMainPlayerController::BeginPlay()
 		PrePlant = GetWorld()->SpawnActor<AActor_PrePlacedPlant>(PrePlantClass, Location, Rotation);
 	}
 	CharacterHUD = Cast<AGamePlayHUD>(GetHUD());
-	GrowSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Plant/growplant.growplant'"));
-	RemoveSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Plant/plantremove.plantremove'"));
+	GrowSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/UI/growplant.growplant'"));
+	RemoveSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/UI/plantremove.plantremove'"));
 
 	GetWorld()->GetTimerManager().SetTimer(DetectPlantAreaHandle, this, &AMainPlayerController::DetectPlantArea, 0.01f, true);
 

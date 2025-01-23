@@ -29,10 +29,15 @@ protected:
 	UFUNCTION()
 	void MeshOnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonPressed);
 
+	void SelectSun();
+
 	UPROPERTY(EditDefaultsOnly)
 	float SunValue = 25;
 
 	class AMainGameStateBase* GameState;
+
+	UFUNCTION()
+	virtual void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 private:
 	UPROPERTY(EditDefaultsOnly)
@@ -57,4 +62,7 @@ private:
 	FVector2D EndPosition = FVector2D(25, 25);
 
 	FOnTimelineEvent SelectTimelineFinishedEvent;
+
+	FTimerHandle RotationHandle;
+
 };

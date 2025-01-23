@@ -16,8 +16,8 @@ void UUserWidget_Shovel::NativeConstruct()
 	GetWorld()->GetTimerManager().SetTimer(ShovelHandle, this, &UUserWidget_Shovel::SetShovelLocation, 0.01f, true);
 	GetWorld()->GetTimerManager().PauseTimer(ShovelHandle);
 
-	ShovelSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/Tool/shovel.shovel'"));
-}
+	ShovelSoundWave = LoadObject<USoundWave>(nullptr, TEXT("SoundWave'/Game/Audio/SoundEffect/UI/shovel.shovel'"));
+} 
 
 void UUserWidget_Shovel::OnSelectedShovel()
 {

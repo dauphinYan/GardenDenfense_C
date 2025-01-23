@@ -16,8 +16,12 @@ ASunActor::ASunActor()
 
 	SunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SunMesh"));
 	SunMesh->SetupAttachment(RootComponent);
+	SunMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
+	SunMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
+	SunMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 	SunMesh->SetSimulatePhysics(true);
 	SunMesh->OnClicked.AddDynamic(this, &ASunActor::MeshOnClicked);
+	SunMesh->OnComponentBeginOverlap.AddDynamic(this, &ASunActor::OnBeginOverlap);
 }
 
 void ASunActor::BeginPlay()
@@ -37,9 +41,22 @@ void ASunActor::Tick(float DeltaTime)
 
 void ASunActor::MeshOnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonPressed)
 {
+	SelectSun();
+}
+
+void ASunActor::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	SelectSun();
+}
+
+void ASunActor::SelectSun()
+{
 	GameState = GameState == nullptr ? Cast<AMainGameStateBase>(GetWorld()->GetGameState()) : GameState;
 	GameState->AddSunValue(SunValue);
 	SunMesh->SetHiddenInGame(true);
+	SunMesh->SetSimulatePhysics(false);
+	SunMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
 	if (SunImageClass)
 	{
 		SunWidget = CreateWidget<UUserWidget>(GetWorld(), SunImageClass);
@@ -68,9 +85,7 @@ void ASunActor::MeshOnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonPress
 void ASunActor::UpdateSunWidgetPosition(float Value)
 {
 	Value = FMath::Clamp(Value, 0.0f, 1.0f);
-
 	FVector2D CurPosition = FMath::Lerp(StartPosition, EndPosition, Value);
-
 	if (SunWidget)
 	{
 		SunWidget->SetPositionInViewport(CurPosition, false);
@@ -79,6 +94,9 @@ void ASunActor::UpdateSunWidgetPosition(float Value)
 
 void ASunActor::OnSelectTimelineFinished()
 {
+	if (SunWidget)
+	{
+		SunWidget->RemoveFromParent();
+	}
 	Destroy();
 }
-
