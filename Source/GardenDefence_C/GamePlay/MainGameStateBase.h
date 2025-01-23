@@ -28,4 +28,7 @@ public:
 private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class AGamePlayHUD* CharacterHUD;
+
+	UPROPERTY(EditDefaultsOnly)
+	class USoundWave* SunSoundWave;
 };

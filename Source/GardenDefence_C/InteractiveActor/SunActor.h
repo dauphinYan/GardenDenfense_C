@@ -4,23 +4,57 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/TimelineComponent.h"
 #include "SunActor.generated.h"
 
 UCLASS()
 class GARDENDEFENCE_C_API ASunActor : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	ASunActor();
 
-protected:
+public:
 	virtual void BeginPlay() override;
-
-public:	
 	virtual void Tick(float DeltaTime) override;
+
+protected:
+	UFUNCTION()
+	void UpdateSunWidgetPosition(float Value);
+
+	UFUNCTION()
+	void OnSelectTimelineFinished();
+
+	UFUNCTION()
+	void MeshOnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonPressed);
+
+	UPROPERTY(EditDefaultsOnly)
+	float SunValue = 25;
+
+	class AMainGameStateBase* GameState;
 
 private:
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* SunMesh;
+
+	APlayerController* PlayerController;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UUserWidget> SunImageClass;
+
+	UUserWidget* SunWidget;
+
+	UPROPERTY()
+	FTimeline MoveTimeline;
+
+	UPROPERTY(EditDefaultsOnly)
+	UCurveFloat* MoveCurve;
+
+	FOnTimelineFloat MoveFunction;
+
+	FVector2D StartPosition;
+	FVector2D EndPosition = FVector2D(25, 25);
+
+	FOnTimelineEvent SelectTimelineFinishedEvent;
 };

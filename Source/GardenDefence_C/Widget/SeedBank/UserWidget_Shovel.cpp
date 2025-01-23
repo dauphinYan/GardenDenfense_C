@@ -50,7 +50,7 @@ void UUserWidget_Shovel::SetShovelLocation()
 	{
 		FVector2D MousePosition = UWidgetLayoutLibrary::GetMousePositionOnViewport(GetWorld());
 		UE_LOG(LogTemp, Log, TEXT("Mouse Position: X=%f, Y=%f"), MousePosition.X, MousePosition.Y);
-		this->SetPositionInViewport(MousePosition);
+		this->SetPositionInViewport(MousePosition, false);
 		this->SetVisibility(ESlateVisibility::Visible);
 	}
 }
