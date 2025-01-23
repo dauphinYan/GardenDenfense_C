@@ -17,4 +17,6 @@ class GARDENDEFENCE_C_API IInterface_Enemy
 public:
 	virtual bool IsAlive();
 
+	// BulletHitEffect
+	virtual void HitBySnowPea();
 };

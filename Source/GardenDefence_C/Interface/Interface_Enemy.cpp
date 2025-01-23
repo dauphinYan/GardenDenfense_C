@@ -7,3 +7,7 @@ bool IInterface_Enemy::IsAlive()
 {
     return false;
 }
+
+void IInterface_Enemy::HitBySnowPea()
+{
+}

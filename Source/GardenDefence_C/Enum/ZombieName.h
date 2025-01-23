@@ -31,3 +31,11 @@ enum class EZombieName : uint8
 	EZN_DrZomboss UMETA(DisplayName = "Dr. Zomboss"),
 	EZN_GigaGargantuar UMETA(DisplayName = "Giga-gargantuar")
 };
+
+UENUM(BlueprintType)
+enum class EZombieEquipment : uint8
+{
+	EZE_None UMETA(DisplayName = "None"),
+	EZE_Cone UMETA(DisplayName = "Cone"),
+	EZE_Bucket UMETA(DisplayName = "Bucket")
+};

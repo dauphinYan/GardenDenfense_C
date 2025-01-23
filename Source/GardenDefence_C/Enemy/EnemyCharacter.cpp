@@ -1,22 +1,33 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "EnemyCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
-// Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
 
-// Called when the game starts or when spawned
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (ZombieDataTable == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to load ZombieInfoDataTable"));
+		return;
+	}
+	TArray<FName> RowNames = ZombieDataTable->GetRowNames();
+	for (FName RowName : RowNames)
+	{
+		FZombieInfo* RowData = ZombieDataTable->FindRow<FZombieInfo>(RowName, TEXT("Zombie Info"));
+		Health = RowData->Health;
+		Damage = RowData->Damage;
+		AtkSpeed = RowData->AtkSpeed;
+		MoveSpeed = RowData->MoveSpeed;
+	}
+	GetCharacterMovement()->MaxWalkSpeed = MoveSpeed;
 
+	OnTakeAnyDamage.AddDynamic(this, &AEnemyCharacter::ReceiveDamage);
 }
 
 bool AEnemyCharacter::IsAlive()
@@ -24,17 +35,9 @@ bool AEnemyCharacter::IsAlive()
 	return bIsAlive;
 }
 
-// Called every frame
 void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
 
