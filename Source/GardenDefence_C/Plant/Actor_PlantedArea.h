@@ -31,6 +31,9 @@ public:
 
 	virtual bool RemovePlant() override;
 
+	UFUNCTION()
+	void OnPlantDestroyed(AActor* Plant);
+
 private:
 	UPROPERTY(EditDefaultsOnly)
 	class UWidgetComponent* ArrowWidget;

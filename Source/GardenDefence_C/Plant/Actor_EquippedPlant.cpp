@@ -44,7 +44,6 @@ void AActor_EquippedPlant::SearchEnemy()
 {
 	FVector Location = GetActorLocation();
 	TArray<FOverlapResult> OverlapResults;
-
 	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(AtkRange);
 	FCollisionQueryParams CollisionQueryParams;
 	CollisionQueryParams.AddIgnoredActor(this);

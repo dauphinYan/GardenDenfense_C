@@ -74,7 +74,7 @@ void AActor_PlantedArea::SetArrowVisibility(bool bCanSee)
 
 bool AActor_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
 {
-
+	if (bIsPlanted == true) return false;
 	switch (InPlacedPlantName)
 	{
 	case EPlacedPlantName::PPN_SunFlower:
@@ -88,6 +88,7 @@ bool AActor_PlantedArea::GrowPlant(EPlacedPlantName InPlacedPlantName)
 			bIsPlanted = true;
 			SetArrowVisibility(false);
 			GetSelectedPlantInfo(InPlacedPlantName);
+			Plant->OnDestroyed.AddDynamic(this, &AActor_PlantedArea::OnPlantDestroyed);
 			return true;
 		}
 		break;
@@ -117,32 +118,43 @@ void AActor_PlantedArea::GetSelectedPlantInfo(EPlacedPlantName InPlacedPlantName
 	{
 		UE_LOG(LogTemp, Error, TEXT("Failed to load DataTable at path: %s"), *DataTablePath);
 	}
-	TArray<FName> RowNames = PlantDataTable->GetRowNames();
-	for (int32 i = 0; i < RowNames.Num(); i++)
+	else
 	{
-		FPlacedPlantInfo* RowData = PlantDataTable->FindRow<FPlacedPlantInfo>(RowNames[i], TEXT("Plant Info"));
-		if (RowData && RowData->PlacedPlantName == InPlacedPlantName)
+		TArray<FName> RowNames = PlantDataTable->GetRowNames();
+		for (int32 i = 0; i < RowNames.Num(); i++)
 		{
-			GameState = GameState == nullptr ? GameState = Cast<AMainGameStateBase>(GetWorld()->GetGameState()) : GameState;
-			GameState->AddSunValue(-RowData->Sun);
-			break;
+			FPlacedPlantInfo* RowData = PlantDataTable->FindRow<FPlacedPlantInfo>(RowNames[i], TEXT("Plant Info"));
+			if (RowData && RowData->PlacedPlantName == InPlacedPlantName)
+			{
+				GameState = GameState == nullptr ? GameState = Cast<AMainGameStateBase>(GetWorld()->GetGameState()) : GameState;
+				GameState->AddSunValue(-RowData->Sun);
+				break;
+			}
 		}
 	}
 }
 
 bool AActor_PlantedArea::RemovePlant()
 {
-	SetArrowVisibility(false);
 	if (Plant)
 	{
-		Plant->Destroy();
-		Plant = nullptr;
+		if (Plant->IsValidLowLevel())
+			Plant->Destroy();
 		return true;
 	}
 	else
 	{
 		return false;
 	}
-
 }
 
+void AActor_PlantedArea::OnPlantDestroyed(AActor* InPlant)
+{
+	if (InPlant)
+	{
+		Plant->OnDestroyed.RemoveDynamic(this, &AActor_PlantedArea::OnPlantDestroyed);
+		SetArrowVisibility(false);
+		Plant = nullptr;
+		bIsPlanted = false;
+	}
+}
