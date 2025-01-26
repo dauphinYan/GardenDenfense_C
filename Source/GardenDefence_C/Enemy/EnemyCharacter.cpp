@@ -16,23 +16,32 @@ void AEnemyCharacter::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("Failed to load ZombieInfoDataTable"));
 		return;
 	}
-	TArray<FName> RowNames = ZombieDataTable->GetRowNames();
-	for (FName RowName : RowNames)
+	TArray<FName> ZombieNames = ZombieDataTable->GetRowNames();
+	for (FName RowName : ZombieNames)
 	{
 		FZombieInfo* RowData = ZombieDataTable->FindRow<FZombieInfo>(RowName, TEXT("Zombie Info"));
+		if (RowData->eZombieName != ZombieName) continue;
 		Health = RowData->Health;
-		Damage = RowData->Damage;
+		AtkDamage = RowData->Damage;
 		AtkSpeed = RowData->AtkSpeed;
 		MoveSpeed = RowData->MoveSpeed;
 	}
 	GetCharacterMovement()->MaxWalkSpeed = MoveSpeed;
 
-	OnTakeAnyDamage.AddDynamic(this, &AEnemyCharacter::ReceiveDamage);
-}
+	if (ZombieEquipmentDataTable == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to load ZombieInfoDataTable"));
+		return;
+	}
+	TArray<FName> ZombieEquipmentNames = ZombieEquipmentDataTable->GetRowNames();
+	for (FName RowName : ZombieEquipmentNames)
+	{
+		FZombieEquipment* RowData = ZombieEquipmentDataTable->FindRow<FZombieEquipment>(RowName, TEXT("Zombie Equipment"));
+		if (RowData->eZombieEquipment != ZombieEquipment) continue;
+		ArmorValue = RowData->ArmorValue;
+	}
 
-bool AEnemyCharacter::IsAlive()
-{
-	return bIsAlive;
+	OnTakeAnyDamage.AddDynamic(this, &AEnemyCharacter::ReceiveDamage);
 }
 
 void AEnemyCharacter::Tick(float DeltaTime)
@@ -41,3 +50,22 @@ void AEnemyCharacter::Tick(float DeltaTime)
 
 }
 
+bool AEnemyCharacter::IsAlive()
+{
+	return bIsAlive;
+}
+
+void AEnemyCharacter::ReceiveDamage(AActor* DamageActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser)
+{
+
+}
+
+void AEnemyCharacter::OnArmorDestroyed()
+{
+
+}
+
+void AEnemyCharacter::OnEnemyDied()
+{
+	Destroy();
+}

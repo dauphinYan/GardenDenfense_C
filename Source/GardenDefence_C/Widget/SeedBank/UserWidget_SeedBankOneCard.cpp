@@ -4,6 +4,7 @@
 #include "Components/Button.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "GardenDefence_C/GamePlay/MainPlayerController.h"
+#include "GardenDefence_C/Enum/OperationState.h"
 #include "Sound/SoundWave.h"
 
 void UUserWidget_SeedBankOneCard::NativeConstruct()
@@ -20,7 +21,8 @@ void UUserWidget_SeedBankOneCard::NativeConstruct()
 void UUserWidget_SeedBankOneCard::OnButtonChooseClicked()
 {
 	if (PlayerController == nullptr) return;
-	PlayerController->SelectPlantInSeedBank(Index);
+	if (PlayerController->OperationState == EOperationState::EOS_Unoccupied || PlayerController->OperationState == EOperationState::EOS_SelectingPlant)
+		PlayerController->SelectPlantInSeedBank(Index);
 }
 
 void UUserWidget_SeedBankOneCard::SetCardInfo(FPlacedPlantInfo InPlacedPlantInfo, int32 InIndex)

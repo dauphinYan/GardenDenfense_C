@@ -39,3 +39,15 @@ struct FZombieInfo : public FTableRowBase
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Zombie Resourse")
 	UTexture2D* ZombieImage;
 };
+
+USTRUCT(BlueprintType)
+struct FZombieEquipment : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly)
+	EZombieEquipment eZombieEquipment;
+
+	UPROPERTY(EditDefaultsOnly)
+	float ArmorValue;
+};

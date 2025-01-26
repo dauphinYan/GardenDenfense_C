@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GardenDefence_C/Structure/Structure_ZombieInfo.h"
-#include "GardenDefence_C/Enum/ZombieName.h"
 #include "GardenDefence_C/Interface/Interface_Enemy.h"
 #include "EnemyCharacter.generated.h"
 
@@ -23,15 +22,23 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	UDataTable* ZombieDataTable;
 
+	UPROPERTY(EditDefaultsOnly)
+	UDataTable* ZombieEquipmentDataTable;
+
 	EZombieName ZombieName = EZombieName::EZN_Zombie;
 	EZombieEquipment ZombieEquipment = EZombieEquipment::EZE_None;
 
 	float Health = 0;
-	float Damage = 1;
+	float AtkDamage = 1;
 	float AtkSpeed = 1;
 	float MoveSpeed = 0;
+	float ArmorValue = 0;
 
-	virtual void ReceiveDamage(AActor* DamageActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser) = 0;
-private:
 	bool bIsAlive = true;
+
+	UFUNCTION()
+	virtual void ReceiveDamage(AActor* DamageActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
+
+	virtual void OnArmorDestroyed();
+	virtual void OnEnemyDied();
 };

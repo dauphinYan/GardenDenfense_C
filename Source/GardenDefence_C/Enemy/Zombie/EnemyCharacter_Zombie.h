@@ -7,11 +7,15 @@
 #include "EnemyCharacter_Zombie.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class GARDENDEFENCE_C_API AEnemyCharacter_Zombie : public AEnemyCharacter
 {
 	GENERATED_BODY()
-	
+
+protected:
+	virtual void ReceiveDamage(AActor* DamageActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser) override;
+	virtual void OnArmorDestroyed() override;
+	virtual void OnEnemyDied() override;
 };
