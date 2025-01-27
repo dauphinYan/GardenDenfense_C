@@ -8,7 +8,7 @@ public class GardenDefence_C : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","UMG","Niagara" });
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "Niagara", "AIModule" });
 
         PrivateDependencyModuleNames.AddRange(new string[] { "EnhancedInput" });
 

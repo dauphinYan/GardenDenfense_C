@@ -5,6 +5,9 @@ AActor_PlacedPlant::AActor_PlacedPlant()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	USceneComponent* DefaultRoot = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultRoot"));
+	RootComponent = DefaultRoot;
+
 	PlantStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Plant Mesh"));
 	PlantStaticMesh->SetupAttachment(RootComponent);
 }

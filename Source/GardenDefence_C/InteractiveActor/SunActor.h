@@ -12,6 +12,8 @@ class GARDENDEFENCE_C_API ASunActor : public AActor
 {
 	GENERATED_BODY()
 
+	friend class AActor_PlacedPlant_SunFlower;
+
 public:
 	ASunActor();
 
