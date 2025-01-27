@@ -16,7 +16,7 @@ class GARDENDEFENCE_C_API UAnimInstance_PlayerCharacter : public UAnimInstance
 	
 public:
 	virtual void NativeInitializeAnimation() override;
-	virtual void NativeUpdateAnimation(float DelataTime) override;
+	virtual void NativeUpdateAnimation(float DeltaTime) override;
 
 private:
 	UPROPERTY(BlueprintReadOnly,Category=Character,meta=(AllowPrivateAccess="true"))

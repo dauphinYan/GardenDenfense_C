@@ -11,11 +11,13 @@ void UAnimInstance_PlayerCharacter::NativeInitializeAnimation()
 	MainCharacter = Cast<AMainCharacter>(TryGetPawnOwner());
 }
 
-void UAnimInstance_PlayerCharacter::NativeUpdateAnimation(float DelataTime)
+void UAnimInstance_PlayerCharacter::NativeUpdateAnimation(float DeltaTime)
 {
+	Super::NativeUpdateAnimation(DeltaTime);
+
 	MainCharacter = MainCharacter == nullptr ? Cast<AMainCharacter>(TryGetPawnOwner()) : MainCharacter;
 	if (MainCharacter == nullptr) return;
-	
+
 	FVector Velocity = MainCharacter->GetVelocity();
 	Velocity.Z = 0;
 	Speed = Velocity.Size();
