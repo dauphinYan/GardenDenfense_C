@@ -4,7 +4,6 @@
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Components/TimelineComponent.h"
 #include "GardenDefence_C/GamePlay/MainGameStateBase.h"
 
 ASunActor::ASunActor()
