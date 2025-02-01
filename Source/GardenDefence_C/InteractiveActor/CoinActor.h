@@ -20,6 +20,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UStaticMeshComponent* CoinMesh;
 
+	UPROPERTY(EditDefaultsOnly)
+	int32 CoinValue = 10;
+
 	UFUNCTION()
 	void UpdateCoinPosition(float Value);
 
@@ -34,10 +37,9 @@ protected:
 
 	void OnSelect();
 
-
-
 private:
-
+	UPROPERTY(EditDefaultsOnly)
+	USoundWave* SelectedSound;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUserWidget> CoinWidgetClass;

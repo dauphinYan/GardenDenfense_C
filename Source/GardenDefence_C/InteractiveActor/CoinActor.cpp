@@ -1,6 +1,7 @@
 #include "CoinActor.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
+#include "GardenDefence_C/FunctionLibrary/FunctionUI.h"
 
 ACoinActor::ACoinActor()
 {
@@ -68,6 +69,14 @@ void ACoinActor::OnSelect()
 	CoinMesh->SetHiddenInGame(true);
 	CoinMesh->SetSimulatePhysics(false);
 	CoinMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	if (SelectedSound)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), SelectedSound);
+	}
+
+	UFunctionUI::World = GetWorld();
+	UFunctionUI::AddMoney(CoinValue);
 
 	if (CoinWidgetClass)
 	{
