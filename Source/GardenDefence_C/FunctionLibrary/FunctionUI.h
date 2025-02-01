@@ -23,5 +23,5 @@ public:
 private:
 	static TWeakObjectPtr<class UMainGameInstance> CachedGameInstance;
 
-	static UMainGameInstance* GetGameInstance1();
+	static UMainGameInstance* GetGameInstance();
 };

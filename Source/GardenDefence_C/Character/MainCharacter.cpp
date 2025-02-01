@@ -17,7 +17,7 @@ AMainCharacter::AMainCharacter()
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(RootComponent);
-	SpringArm->bUsePawnControlRotation = false;
+	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->bInheritYaw = false;
 	SpringArm->bInheritPitch = false;
 	SpringArm->bInheritRoll = false;
@@ -26,7 +26,9 @@ AMainCharacter::AMainCharacter()
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 	Camera->bUsePawnControlRotation = false;
 
+	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
+	bUseControllerRotationRoll = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 	CombatComponent = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
@@ -56,15 +58,19 @@ void AMainCharacter::Move(const FInputActionValue& Value)
 	FVector2D MovementVector = Value.Get<FVector2D>();
 	if (Controller != nullptr)
 	{
-		if (MovementVector.Y != 0.0f)
-		{
-			AddMovementInput(GetActorForwardVector(), MovementVector.Y);
-		}
+		// find out which way is forward
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		if (MovementVector.X != 0.0f)
-		{
-			AddMovementInput(GetActorRightVector(), MovementVector.X);
-		}
+		// get forward vector
+		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+		// get right vector 
+		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+		// add movement 
+		AddMovementInput(ForwardDirection, MovementVector.Y);
+		AddMovementInput(RightDirection, MovementVector.X);
 	}
 }
 

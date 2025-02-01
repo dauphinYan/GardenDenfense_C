@@ -20,6 +20,12 @@ void AZombieController::BeginPlay()
 	GetWorld()->GetTimerManager().SetTimer(SearchHandle, this, &AZombieController::SearchTarget, 1.f, true);
 }
 
+void AZombieController::SetCharacterAttackingBool(bool InBool)
+{
+	bIsAttacking = InBool;
+	Blackboard->SetValueAsBool("bIsAttacking", InBool);
+}
+
 void AZombieController::SearchTarget()
 {
 	APawn* ControlledPawn = GetPawn();
@@ -80,6 +86,8 @@ void AZombieController::SearchTarget()
 		BestTarget = nullptr;
 		if (HomeTarget != nullptr)
 			Blackboard->SetValueAsObject("Target", HomeTarget);
+		else
+			Blackboard->SetValueAsObject("Target", BestTarget);
 	}
 
 	if (BestTarget)

@@ -15,6 +15,9 @@ class GARDENDEFENCE_C_API AZombieController : public AAIController
 public:
 	virtual void BeginPlay() override;
 
+	void SetCharacterAttackingBool(bool InBool);
+		
+
 protected:
 	virtual void SearchTarget();
 
@@ -27,4 +30,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	class UBehaviorTree* BehaviorTree;
+
+private:
+	bool bIsAttacking = false;
+
+public:
+	FORCEINLINE bool GetAttackingBool() { return bIsAttacking; }
 };

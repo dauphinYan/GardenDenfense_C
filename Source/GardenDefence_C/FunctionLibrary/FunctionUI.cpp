@@ -5,7 +5,7 @@
 TWeakObjectPtr<UMainGameInstance> UFunctionUI::CachedGameInstance = nullptr;
 UWorld* UFunctionUI::World = nullptr;
 
-UMainGameInstance* UFunctionUI::GetGameInstance1()
+UMainGameInstance* UFunctionUI::GetGameInstance()
 {
 	if (CachedGameInstance.IsValid())
 	{
@@ -23,7 +23,7 @@ UMainGameInstance* UFunctionUI::GetGameInstance1()
 
 int32 UFunctionUI::GetMoneyAmount()
 {
-	UMainGameInstance* GameInstance = GetGameInstance1();
+	UMainGameInstance* GameInstance = GetGameInstance();
 	if (GameInstance)
 	{
 		return GameInstance->GetMoneyAmount();
@@ -33,7 +33,7 @@ int32 UFunctionUI::GetMoneyAmount()
 
 void UFunctionUI::AddMoney(int32 InValue)
 {
-	UMainGameInstance* GameInstance = GetGameInstance1();
+	UMainGameInstance* GameInstance = GetGameInstance();
 	if (GameInstance)
 	{
 		GameInstance->UpdateMoneyAmount(InValue);

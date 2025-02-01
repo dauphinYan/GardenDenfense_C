@@ -18,11 +18,15 @@ public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaTime) override;
 
+protected:
 	UPROPERTY(BlueprintReadOnly)
 	float Speed = 0;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsAttacking = false;
 
 private:
 	class AEnemyCharacter_Zombie* ZombieCharacter;
 
-
+	class AZombieController* ZombieController;
 };
