@@ -9,7 +9,7 @@ EBTNodeResult::Type UEndAttackBTTask::ExecuteTask(UBehaviorTreeComponent& OwnerC
 		AZombieController* ZombieController = Cast<AZombieController>(AIController);
 		if (ZombieController)
 		{
-sd			ZombieController->SetCharacterAttackingBool(false);
+			ZombieController->SetCharacterAttackingBool(false);
 			return EBTNodeResult::Succeeded;
 		}
 	}

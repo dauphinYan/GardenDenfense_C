@@ -5,7 +5,7 @@ void AActor_PlacedPlant_SunFlower::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetWorld()->GetTimerManager().SetTimer(ProduceHandle, this, &AActor_PlacedPlant_SunFlower::ProduceSunlight, 1.f, true);
+	GetWorld()->GetTimerManager().SetTimer(ProduceHandle, this, &AActor_PlacedPlant_SunFlower::ProduceSunlight, 15.f, true);
 }
 
 void AActor_PlacedPlant_SunFlower::ProduceSunlight()
