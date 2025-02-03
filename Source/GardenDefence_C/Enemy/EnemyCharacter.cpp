@@ -69,3 +69,8 @@ void AEnemyCharacter::OnEnemyDied()
 {
 	Destroy();
 }
+
+void AEnemyCharacter::AttackTarget()
+{
+
+}

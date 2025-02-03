@@ -24,5 +24,5 @@ enum class EPlacedPlantName : uint8
 	PPN_CherryBomb UMETA(DisplayName = "CherryBomb"),
 	PPN_SpikeWeed UMETA(DisplayName = "SpikeWeed"),
 	PPN_TorchStump UMETA(DisplayName = "TorchStump"),
-	PPN_DefaultMax UMETA(DisplayName = "DefaultMax")
+	PPN_None UMETA(DisplayName = "None")
 };

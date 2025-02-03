@@ -20,9 +20,9 @@ EBTNodeResult::Type UMoveToBTTask::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 		FRotator CurrentRotation = AIController->GetControlRotation();
 		FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(AIController->GetPawn()->GetActorLocation(), TargetLocation);
 
-		FRotator SmoothRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), RotationSpeed);
-		AIController->SetControlRotation(SmoothRotation);
-		AIController->GetPawn()->SetActorRotation(SmoothRotation);
+		//FRotator SmoothRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), RotationSpeed);
+		//AIController->SetControlRotation(SmoothRotation);
+		//AIController->GetPawn()->SetActorRotation(SmoothRotation);
 
 		//if (UPathFollowingComponent* PathFollowingComp = AIController->GetPathFollowingComponent())
 		//{
@@ -34,7 +34,7 @@ EBTNodeResult::Type UMoveToBTTask::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 		//	}
 		//}
 
-		AIController->MoveToLocation(TargetLocation);
+		//AIController->MoveToLocation(TargetLocation);
 
 		// 如果AI距离目标足够接近，可以返回成功状态
 		if (FVector::Dist(AIController->GetPawn()->GetActorLocation(), TargetLocation) < 100.f)

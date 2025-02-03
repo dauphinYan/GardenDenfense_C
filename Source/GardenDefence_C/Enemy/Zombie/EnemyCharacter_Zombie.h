@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "../EnemyCharacter.h"
+#include "Kismet/GameplayStatics.h"
 #include "EnemyCharacter_Zombie.generated.h"
 
 /**
@@ -16,6 +17,7 @@ class GARDENDEFENCE_C_API AEnemyCharacter_Zombie : public AEnemyCharacter
 
 protected:
 	virtual void ReceiveDamage(AActor* DamageActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser) override;
+	virtual void AttackTarget() override;
 	virtual void OnArmorDestroyed() override;
 	virtual void OnEnemyDied() override;
 };

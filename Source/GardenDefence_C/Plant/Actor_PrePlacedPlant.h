@@ -18,7 +18,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Plant Asset")
 	UStaticMeshComponent* PlantMesh;
-	EPlacedPlantName PlacedPlantName = EPlacedPlantName::PPN_DefaultMax;
+	EPlacedPlantName PlacedPlantName = EPlacedPlantName::PPN_None;
 	UPROPERTY()
 	TMap<EPlacedPlantName, UStaticMesh*> PlantMeshMap;
 

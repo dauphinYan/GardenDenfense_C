@@ -91,9 +91,9 @@ void AMainPlayerController::OnCanceledSelectPlant()
 {
 	OperationState = EOperationState::EOS_Unoccupied;
 	//GetWorld()->GetTimerManager().PauseTimer(PrePlantHandle);
-	PlacedPlantName = EPlacedPlantName::PPN_DefaultMax;
+	PlacedPlantName = EPlacedPlantName::PPN_None;
 	if (PrePlant == nullptr || CharacterHUD == nullptr) return;
-	PrePlant->SetPlacedPlant(EPlacedPlantName::PPN_DefaultMax);
+	PrePlant->SetPlacedPlant(EPlacedPlantName::PPN_None);
 	CharacterHUD->CancelSelectPlantInSeedBank();
 }
 

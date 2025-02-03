@@ -25,6 +25,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	bool bIsAttacking = false;
 
+	
 private:
 	class AEnemyCharacter_Zombie* ZombieCharacter;
 

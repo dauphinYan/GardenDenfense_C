@@ -41,4 +41,6 @@ protected:
 
 	virtual void OnArmorDestroyed();
 	virtual void OnEnemyDied();
+
+	virtual void AttackTarget();
 };

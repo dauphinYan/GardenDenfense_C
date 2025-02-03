@@ -24,6 +24,11 @@ void AEnemyCharacter_Zombie::ReceiveDamage(AActor* DamageActor, float Damage, co
 	}
 }
 
+void AEnemyCharacter_Zombie::AttackTarget()
+{
+	
+}
+
 void AEnemyCharacter_Zombie::OnArmorDestroyed()
 {
 
