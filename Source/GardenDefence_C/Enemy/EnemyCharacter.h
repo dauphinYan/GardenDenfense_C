@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "GardenDefence_C/Structure/Structure_ZombieInfo.h"
 #include "GardenDefence_C/Interface/Interface_Enemy.h"
+#include "Kismet/GameplayStatics.h"
 #include "EnemyCharacter.generated.h"
 
 UCLASS()
@@ -27,7 +28,6 @@ protected:
 
 	EZombieName ZombieName = EZombieName::EZN_Zombie;
 	EZombieEquipment ZombieEquipment = EZombieEquipment::EZE_None;
-
 	float Health = 0;
 	float AtkDamage = 1;
 	float AtkSpeed = 1;
@@ -42,5 +42,6 @@ protected:
 	virtual void OnArmorDestroyed();
 	virtual void OnEnemyDied();
 
+	UFUNCTION(BlueprintCallable)
 	virtual void AttackTarget();
 };

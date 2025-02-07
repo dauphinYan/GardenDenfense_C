@@ -1,11 +1,29 @@
 #include "Actor_PlacedPlant_SunFlower.h"
 
 
+
+AActor_PlacedPlant_SunFlower::AActor_PlacedPlant_SunFlower()
+{
+	PlacedPlantName = EPlacedPlantName::PPN_SunFlower;
+}
+
 void AActor_PlacedPlant_SunFlower::BeginPlay()
 {
 	Super::BeginPlay();
 
 	GetWorld()->GetTimerManager().SetTimer(ProduceHandle, this, &AActor_PlacedPlant_SunFlower::ProduceSunlight, 15.f, true);
+}
+
+void AActor_PlacedPlant_SunFlower::ReceiveDamage(AActor* DamageActor, float InDamage, const UDamageType* DamageType, AController* InstigatorController, AActor* DamageCauser)
+{
+	if (Health-InDamage > 0)
+	{
+		Health -= InDamage;
+	}
+	else
+	{
+		OnPlantDestroyed();
+	}
 }
 
 void AActor_PlacedPlant_SunFlower::ProduceSunlight()

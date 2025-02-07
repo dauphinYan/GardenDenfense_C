@@ -1,4 +1,5 @@
 #include "EnemyCharacter_Zombie.h"
+#include "ZombieController.h"
 
 void AEnemyCharacter_Zombie::ReceiveDamage(AActor* DamageActor, float Damage, const UDamageType* DamageType, AController* InstigatorController, AActor* DamageCauser)
 {
@@ -26,7 +27,24 @@ void AEnemyCharacter_Zombie::ReceiveDamage(AActor* DamageActor, float Damage, co
 
 void AEnemyCharacter_Zombie::AttackTarget()
 {
-	
+	ZombieController = ZombieController == nullptr ? Cast<AZombieController>(GetController()) : ZombieController;
+	if (ZombieController == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to get zombiecontroller!"));
+		return;
+	}
+	AActor* Target = ZombieController->BestTarget;
+	if (Target)
+	{
+		UGameplayStatics::ApplyDamage(
+			Target,
+			AtkDamage,
+			ZombieController,
+			this,
+			UDamageType::StaticClass()
+		);
+	}
+
 }
 
 void AEnemyCharacter_Zombie::OnArmorDestroyed()

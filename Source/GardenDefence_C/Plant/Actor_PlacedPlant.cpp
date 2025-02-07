@@ -11,7 +11,7 @@ AActor_PlacedPlant::AActor_PlacedPlant()
 	PlantStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Plant Mesh"));
 	PlantStaticMesh->SetupAttachment(RootComponent);
 
-	//OnTakeAnyDamage.AddDynamic(this, &AActor_PlacedPlant::ReceiveDamage);
+	OnTakeAnyDamage.AddDynamic(this, &AActor_PlacedPlant::ReceiveDamage);
 
 }
 
@@ -46,13 +46,14 @@ void AActor_PlacedPlant::Tick(float DeltaTime)
 
 }
 
-//void AActor_PlacedPlant::ReceiveDamage(AActor* DamageActor, float Damage, const UDamageType* DamageType, AController* InstigatorController, AActor* DamageCauser)
-//{
-//
-//}
-
-void AActor_PlacedPlant::ReceiveAnyDamage(float InDamage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
+void AActor_PlacedPlant::ReceiveDamage(AActor* DamageActor, float InDamage, const UDamageType* DamageType, AController* InstigatorController, AActor* DamageCauser)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Received Damage: %f"), InDamage));
+	
+}
+
+void AActor_PlacedPlant::OnPlantDestroyed()
+{
+	
+	Destroy();
 }
 

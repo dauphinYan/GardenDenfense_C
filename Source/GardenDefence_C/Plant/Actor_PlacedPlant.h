@@ -15,8 +15,6 @@ public:
 	AActor_PlacedPlant();
 	virtual void Tick(float DeltaTime) override;
 
-	void ReceiveAnyDamage(float InDamage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
-
 protected:
 	virtual void BeginPlay() override;
 
@@ -31,8 +29,8 @@ protected:
 	float Damage = 1;
 	float AtkSpeed = 1;
 
-	//UFUNCTION()
-	//virtual void ReceiveDamage(AActor* DamageActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
+	UFUNCTION()
+	virtual void ReceiveDamage(AActor* DamageActor, float InDamage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
 
-
+	virtual void OnPlantDestroyed();
 };

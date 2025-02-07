@@ -10,6 +10,8 @@
 UCLASS()
 class GARDENDEFENCE_C_API AZombieController : public AAIController
 {
+	friend class AEnemyCharacter_Zombie;
+
 	GENERATED_BODY()
 
 public:

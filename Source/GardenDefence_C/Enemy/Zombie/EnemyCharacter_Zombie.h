@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "../EnemyCharacter.h"
-#include "Kismet/GameplayStatics.h"
 #include "EnemyCharacter_Zombie.generated.h"
 
 /**
@@ -20,4 +19,6 @@ protected:
 	virtual void AttackTarget() override;
 	virtual void OnArmorDestroyed() override;
 	virtual void OnEnemyDied() override;
+
+	class AZombieController* ZombieController;
 };

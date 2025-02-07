@@ -1,8 +1,32 @@
 # 植物大战僵尸之花园保卫战
 
-<img src="MDimage/tittle_cn.png" alt="Tittle" style="zoom:80%;" />
+<img src="MDimage/tittle_cn.png" alt="Tittle"  />
 
-<img src="MDimage/tittle_en.png" alt="titile_en" style="zoom: 67%;" />
+<img src="MDimage/tittle_en.png" alt="titile_en"  />
+
+## 游戏介绍
+
+“植物大战僵尸之花园保卫战”（PVZ - Garden Defense）是一款由虚幻引擎（Unreal Engine）开发的第三人称3D肉鸽游戏。
+
+## 游戏玩法
+
+玩家操作角色戴夫攻击僵尸，也可使用阳光购买植物来抵御僵尸的入侵。
+
+### 胜利条件
+
+一定时间内抵御僵尸的入侵。
+
+### 失败条件
+
+戴夫死亡或僵尸进入房屋。
+
+### 角色信息
+
+角色属性包括：**攻击** 、**血量** 和 **兴奋值**
+
+-   攻击值决定了戴夫攻击僵尸时的每段伤害。
+-   血量为零、僵尸进入房屋 游戏失败。
+-   兴奋值满可短时间内使植物射速翻倍，此后兴奋值清空。
 
 ## 更新日志
 

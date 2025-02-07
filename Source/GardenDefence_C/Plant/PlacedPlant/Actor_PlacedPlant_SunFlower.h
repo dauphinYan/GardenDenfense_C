@@ -11,9 +11,13 @@ class GARDENDEFENCE_C_API AActor_PlacedPlant_SunFlower : public AActor_PlacedPla
 	GENERATED_BODY()
 
 public:
+	AActor_PlacedPlant_SunFlower();
+
 	virtual void BeginPlay() override;
 
 protected:
+	virtual void ReceiveDamage(AActor* DamageActor, float InDamage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
+
 	void ProduceSunlight();
 
 private:
