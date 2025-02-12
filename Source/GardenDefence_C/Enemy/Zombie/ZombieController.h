@@ -18,14 +18,13 @@ public:
 	virtual void BeginPlay() override;
 
 	void SetCharacterAttackingBool(bool InBool);
-		
+
 
 protected:
 	virtual void SearchTarget();
 
 	FTimerHandle SearchHandle;
 	AActor* BestTarget;
-	AActor* HomeTarget;
 
 	UPROPERTY(EditDefaultsOnly)
 	class UBlackboardData* BlackboardData;

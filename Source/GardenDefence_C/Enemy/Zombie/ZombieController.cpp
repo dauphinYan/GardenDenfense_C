@@ -1,6 +1,8 @@
 #include "ZombieController.h"
 #include "GardenDefence_C/Character/MainCharacter.h"
 #include "GardenDefence_C/Plant/Actor_PlacedPlant.h"
+#include "GardenDefence_C/InteractiveActor/HomeActor.h"
+#include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/BlackboardData.h"
@@ -35,9 +37,17 @@ void AZombieController::SearchTarget()
 	}
 
 	// If the current target is a placed plant and is still valid, skip further searching.
-	if (BestTarget && BestTarget->IsA(AActor_PlacedPlant::StaticClass()) && BestTarget->GetWorld())
+	auto* TargetFromBlackboard = Blackboard->GetValueAsObject("Target");
+	if (IsValid(TargetFromBlackboard))
 	{
-		return;
+		if (TargetFromBlackboard->IsA(AActor_PlacedPlant::StaticClass()))
+		{
+			return;
+		}
+	}
+	else
+	{
+		BestTarget = nullptr;
 	}
 
 	FVector ZombieLocation = ControlledPawn->GetActorLocation();
@@ -45,7 +55,7 @@ void AZombieController::SearchTarget()
 	FCollisionObjectQueryParams ObjectQueryParams;
 	ObjectQueryParams.AddObjectTypesToQuery(ECC_Pawn);
 	ObjectQueryParams.AddObjectTypesToQuery(ECC_PlacedPlant);
-	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(1000.f);
+	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(800.f);
 
 	bool bHasOverlap = GetWorld()->OverlapMultiByObjectType(
 		OverlapResult,
@@ -62,17 +72,11 @@ void AZombieController::SearchTarget()
 		for (const FOverlapResult& Result : OverlapResult)
 		{
 			AActor* OverlapActor = Result.GetActor();
-			// Priority 1: Check if the actor is the player character.
-			if (OverlapActor->IsA(AMainCharacter::StaticClass()))
-			{
-				BestTarget = OverlapActor;
-				break;
-			}
-			// Priority 2: Check if it is the placed plant.
-			if (OverlapActor->IsA(AActor_PlacedPlant::StaticClass()))
+			// Priority 1: Check if it is the placed plant.
+			if (OverlapActor->IsA(AActor_PlacedPlant::StaticClass()) || OverlapActor->IsA(AMainCharacter::StaticClass()))
 			{
 				float CurDistance = FVector::Dist(ZombieLocation, OverlapActor->GetActorLocation());
-				if (!BestTarget || CurDistance < ClosestDistance)
+				if (CurDistance < ClosestDistance)
 				{
 					ClosestDistance = CurDistance;
 					BestTarget = OverlapActor;
@@ -84,10 +88,11 @@ void AZombieController::SearchTarget()
 	else
 	{
 		BestTarget = nullptr;
+		AActor* HomeTarget = UGameplayStatics::GetActorOfClass(GetWorld(), AHomeActor::StaticClass());
 		if (HomeTarget != nullptr)
+		{
 			Blackboard->SetValueAsObject("Target", HomeTarget);
-		else
-			Blackboard->SetValueAsObject("Target", BestTarget);
+		}
 	}
 
 	if (BestTarget)

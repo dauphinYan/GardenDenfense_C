@@ -10,9 +10,8 @@ EBTNodeResult::Type UEndAttackBTTask::ExecuteTask(UBehaviorTreeComponent& OwnerC
 		if (ZombieController)
 		{
 			ZombieController->SetCharacterAttackingBool(false);
-			return EBTNodeResult::Succeeded;
 		}
 	}
 
-	return EBTNodeResult::Type();
+	return EBTNodeResult::Succeeded;
 }
