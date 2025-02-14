@@ -16,7 +16,7 @@ class GARDENDEFENCE_C_API USunWidgetPool : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	virtual void NativeOnInitialized() override;
+	void InitializeArray();
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime);
 
 

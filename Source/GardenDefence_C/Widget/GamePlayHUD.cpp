@@ -16,7 +16,8 @@ void AGamePlayHUD::BeginPlay()
 		MainUI->UpdateSun();
 	}
 
-
+	SunWidgetPool->AddToViewport();
+	SunWidgetPool->InitializeArray();
 }
 
 void AGamePlayHUD::SelectPlantInSeedBank(int32 Index)

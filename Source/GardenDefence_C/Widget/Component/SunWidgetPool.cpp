@@ -3,13 +3,19 @@
 
 #include "SunWidgetPool.h"
 
-void USunWidgetPool::NativeOnInitialized()
+void USunWidgetPool::InitializeArray()
 {
-	Super::NativeOnInitialized();
-
 	for (int i = 0; i < 5; i++)
 	{
-		SunWidgets.Add(CreateWidget<UUserWidget>(this, SunImageClass));
+		UUserWidget* NewWidget = CreateWidget<UUserWidget>(this, SunImageClass);
+		if (NewWidget)
+		{
+			SunWidgets.Add(NewWidget);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Failed to create widget at index %d"), i);
+		}
 	}
 }
 
