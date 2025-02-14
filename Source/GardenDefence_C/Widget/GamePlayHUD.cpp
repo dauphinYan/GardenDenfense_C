@@ -15,6 +15,8 @@ void AGamePlayHUD::BeginPlay()
 		MainUI->AddToViewport();
 		MainUI->UpdateSun();
 	}
+
+
 }
 
 void AGamePlayHUD::SelectPlantInSeedBank(int32 Index)
@@ -57,4 +59,9 @@ void AGamePlayHUD::UpdateSun()
 {
 	if (MainUI == nullptr) return;
 	MainUI->UpdateSun();
+}
+
+void AGamePlayHUD::PlaySunSelectedAnimation(FVector2D ActorScreenPosition)
+{
+	SunWidgetPool->PlaySunSelectedAnimation(ActorScreenPosition);
 }

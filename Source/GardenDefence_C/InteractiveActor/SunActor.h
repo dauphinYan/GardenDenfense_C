@@ -20,11 +20,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	UFUNCTION()
-	void UpdateSunWidgetPosition(float Value);
-
-	UFUNCTION()
-	void OnSelectTimelineFinished();
 
 	UFUNCTION()
 	void MeshOnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonPressed);
@@ -44,25 +39,4 @@ private:
 	UStaticMeshComponent* SunMesh;
 
 	APlayerController* PlayerController;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UUserWidget> SunImageClass;
-
-	UUserWidget* SunWidget;
-
-	UPROPERTY()
-	FTimeline MoveTimeline;
-
-	UPROPERTY(EditDefaultsOnly)
-	UCurveFloat* MoveCurve;
-
-	FOnTimelineFloat MoveFunction;
-
-	FVector2D StartPosition;
-	FVector2D EndPosition = FVector2D(25, 25);
-
-	FOnTimelineEvent SelectTimelineFinishedEvent;
-
-	FTimerHandle RotationHandle;
-
 };

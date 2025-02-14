@@ -2,9 +2,11 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/WidgetComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GardenDefence_C/GamePlay/MainGameStateBase.h"
+#include "GardenDefence_C/Widget/GamePlayHUD.h"
 
 ASunActor::ASunActor()
 {
@@ -18,6 +20,7 @@ ASunActor::ASunActor()
 	SunMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
 	SunMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	SunMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+	SunMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
 	SunMesh->SetSimulatePhysics(true);
 	SunMesh->OnClicked.AddDynamic(this, &ASunActor::MeshOnClicked);
 	SunMesh->OnComponentBeginOverlap.AddDynamic(this, &ASunActor::OnBeginOverlap);
@@ -35,7 +38,6 @@ void ASunActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	MoveTimeline.TickTimeline(DeltaTime);
 }
 
 void ASunActor::MeshOnClicked(UPrimitiveComponent* ClickedComp, FKey ButtonPressed)
@@ -52,50 +54,18 @@ void ASunActor::SelectSun()
 {
 	GameState = GameState == nullptr ? Cast<AMainGameStateBase>(GetWorld()->GetGameState()) : GameState;
 	GameState->AddSunValue(SunValue);
-	SunMesh->SetHiddenInGame(true);
+	SetActorHiddenInGame(true);
 	SunMesh->SetSimulatePhysics(false);
 	SunMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
-	if (SunImageClass)
-	{
-		SunWidget = CreateWidget<UUserWidget>(GetWorld(), SunImageClass);
-		SunWidget->AddToViewport();
-	}
-	if (SunWidget)
+	AGamePlayHUD* GamePlayHUD = Cast<AGamePlayHUD>(PlayerController->GetHUD());
+	if (GamePlayHUD)
 	{
 		FVector2D ActorScreenPosition;
 		if (PlayerController && UGameplayStatics::ProjectWorldToScreen(PlayerController, SunMesh->GetComponentLocation(), ActorScreenPosition))
 		{
-			StartPosition = ActorScreenPosition;
-
-			if (MoveCurve)
-			{
-				MoveFunction.BindUFunction(this, GET_FUNCTION_NAME_CHECKED(ASunActor, UpdateSunWidgetPosition));
-				SelectTimelineFinishedEvent.BindUFunction(this, GET_FUNCTION_NAME_CHECKED(ASunActor, OnSelectTimelineFinished));
-				MoveTimeline.AddInterpFloat(MoveCurve, MoveFunction);
-				MoveTimeline.SetTimelineFinishedFunc(SelectTimelineFinishedEvent);
-				MoveTimeline.SetLooping(false);
-				MoveTimeline.PlayFromStart();
-			}
+			GamePlayHUD->PlaySunSelectedAnimation(ActorScreenPosition);
 		}
-	}
-}
-
-void ASunActor::UpdateSunWidgetPosition(float Value)
-{
-	Value = FMath::Clamp(Value, 0.0f, 1.0f);
-	FVector2D CurPosition = FMath::Lerp(StartPosition, EndPosition, Value);
-	if (SunWidget)
-	{
-		SunWidget->SetPositionInViewport(CurPosition, false);
-	}
-}
-
-void ASunActor::OnSelectTimelineFinished()
-{
-	if (SunWidget)
-	{
-		SunWidget->RemoveFromParent();
 	}
 	Destroy();
 }

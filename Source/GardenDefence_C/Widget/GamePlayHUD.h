@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "Component/SunWidgetPool.h"
 #include "GamePlayHUD.generated.h"
 
 /**
@@ -17,6 +18,7 @@ class GARDENDEFENCE_C_API AGamePlayHUD : public AHUD
 public:
 	virtual void BeginPlay() override;
 
+
 	UPROPERTY(EditDefaultsOnly)
 	class UUserWidget_MainUI* MainUI;
 
@@ -27,6 +29,9 @@ public:
 	void OnShopButtonPressed();
 	void RefreshBag();
 	void UpdateSun();
+	void PlaySunSelectedAnimation(FVector2D ActorScreenPosition);
 
 private:
+	UPROPERTY(EditDefaultsOnly)
+	USunWidgetPool* SunWidgetPool;
 };
